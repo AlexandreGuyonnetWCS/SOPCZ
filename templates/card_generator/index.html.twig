@@ -9,5 +9,15 @@
         <h1>Bienvenue dans votre gestionnaire de cartes</h1>
     </div>
 </div>
+<h1 class="text-center mt-5">Rechercher des employes</h1>
+
+<div class="container">
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        <button type="submit">Rechercher</button>
+    {{ form_end(form) }}
+    
+</div>
 
 {% endblock %}

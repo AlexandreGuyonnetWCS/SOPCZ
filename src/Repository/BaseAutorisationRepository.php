@@ -39,6 +39,18 @@ class BaseAutorisationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByNom($value): array
+    {
+        return $this->createQueryBuilder('b')
+            ->join('b.Employe', 'e')
+            ->andWhere('e.nom = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 
 //    /**
 //     * @return BaseAutorisation[] Returns an array of BaseAutorisation objects

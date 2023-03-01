@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1 class="text-center mt-5">Résultats de la recherche</h1>
+	<div class="container">
+		{% if employes|length %}
+			<table>
+				<thead>
+					<tr>
+						<th>Employe</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for employe in employes %}
+						<tr>
+							<td>{{ employe.genre }}
+								{{ employe.nom }}
+								{{ employe.prenom }}</td>
+						</tr>
+						<tr>
+							<td>
+								département :
+								{{ employe.departement}}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								poste:
+								{{ employe.poste}}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								photo :
+								<img src="{{ asset('uploads/employes/' ~ employe.photo) }}" alt="photo" width="100px" height="100px"></td>
+						</tr>
+						<tr>
+							<td>
+								date de visite médicale:{{ employe.amco|date('d/m/Y')}}
+							</td>
+						</tr>
+						<tr>
+							<td>
+                            <div class="row mt-5">
+								{% for baseAutorisation in baseAutorisations %}
+									{% for diplome in baseAutorisation.Diplome %}
+										
+											<div class="col-auto">
+												<div class="card" style="width: 18rem;">
+													<div class="card-body">
+														<h5 class="card-title">{{ diplome.type }}</h5>
+														<h6 class="card-subtitle mb-2 text-muted">{{ diplome.nom }}</h6>
+														<p class="card-text">{{ diplome.categorie }}</p>
+                                                        <p class="card-text">{{ baseAutorisation.CreatedAt|date('d/m/Y') }}</p>
+														<a href="#" class="card-link">Card link</a>
+														<a href="#" class="card-link">Another link</a>
+													</div>
+												</div>
+											</div>
+										
+									{% endfor %}
+								{% endfor %}</div>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>Aucun résultat</p>
+		{% endif %}
+	</div>
+{% endblock %}

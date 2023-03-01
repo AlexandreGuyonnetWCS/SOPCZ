@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Employe;
-use App\Form\EmployeSearchType;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\EmployeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
