@@ -137,6 +137,4 @@ class BaseAutorisation
 
         return $this;
     }
-
-
 }

@@ -39,8 +39,6 @@ class EmployeRepository extends ServiceEntityRepository
         }
     }
 
-}
-
 //    /**
 //     * @return Employe[] Returns an array of Employe objects
 //     */
