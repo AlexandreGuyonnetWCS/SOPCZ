@@ -147,6 +147,6 @@ class Diplome
 
     public function __toString(): string
     {
-        return $this->getType() . ' -' . $this->getNom() . ' - ' . $this->getCategorie();
+        return $this->getType() . '-' . $this->getNom() . '-' . $this->getCategorie();
     }
 }
