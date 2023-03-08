@@ -9,8 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 
 class DiplomeCrudController extends AbstractCrudController
 {
@@ -91,6 +91,13 @@ class DiplomeCrudController extends AbstractCrudController
             ->setUploadDir('public/uploads/images')
             ->setUploadedFileNamePattern('[randomhash].[extension]')
             ->setRequired(false),
+            SlugField::new('template')
+            ->setTargetFieldName('template')
+            ->setRequired(false)
+            ->setUnlockConfirmationMessage(
+                'It is highly recommended to use the automatic slugs, but you can customize them'
+            ),
+
         ];
     }  
     

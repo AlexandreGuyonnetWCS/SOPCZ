@@ -3,7 +3,7 @@
 {% block body %}
 	<h1 class="text-center mt-5">Résultats de la recherche</h1>
 	<div class="container">
-		{% if employes|length %}
+		{% if employe|length %}
 			<table>
 				<thead>
 					<tr>
@@ -11,7 +11,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for employe in employes %}
+					{% for employe in employe %}
 						<tr>
 							<td>{{ employe.genre }}
 								{{ employe.nom }}
@@ -41,25 +41,40 @@
 						</tr>
 						<tr>
 							<td>
-                            <div class="row mt-5">
-								{% for baseAutorisation in baseAutorisations %}
-									{% for diplome in baseAutorisation.Diplome %}
-										
+								<div class="row mt-5">
+									{% for baseAutorisation in baseAutorisations %}
+										{% for diplome in baseAutorisation.Diplome %}
+
 											<div class="col-auto">
-												<div class="card" style="width: 18rem;">
-													<div class="card-body">
-														<h5 class="card-title">{{ diplome.type }}</h5>
-														<h6 class="card-subtitle mb-2 text-muted">{{ diplome.nom }}</h6>
-														<p class="card-text">{{ diplome.categorie }}</p>
-                                                        <p class="card-text">{{ baseAutorisation.CreatedAt|date('d/m/Y') }}</p>
-														<a href="#" class="card-link">Card link</a>
-														<a href="#" class="card-link">Another link</a>
-													</div>
-												</div>
+					<div class="card" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">{{ diplome.type }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{ diplome.nom }}</h6>
+							<p class="card-text">{{ diplome.categorie }}</p>
+						</div>
+					</div>
+				</div>
+	{% for entreprise in entreprise %}
+		<div class="col-auto">
+			<div class="card" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title">{{ entreprise.nom }}</h5>
+					<h6 class="card-subtitle mb-2 text-muted">{{ entreprise.adresse }}</h6>
+
+					<p class="card-text">{{ entreprise.contacte }}</p>
+					<p class="card-text">{{ entreprise.nomDirecteur }}</p>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+											<div class="mb-3">
+												<a class="linkNav" href="{{ path('carte_pdf', { id: baseAutorisation.id }) }}">Télécharger la carte au format pdf</a>
 											</div>
-										
+
+										{% endfor %}
 									{% endfor %}
-								{% endfor %}</div>
+								</div>
 							</td>
 						</tr>
 					{% endfor %}

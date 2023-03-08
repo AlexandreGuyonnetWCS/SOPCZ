@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\DiplomeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use App\Repository\DiplomeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
 class Diplome
@@ -32,9 +33,14 @@ class Diplome
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
+    
+    #[ORM\Column(length: 255, nullable: true, unique: true)]
+    #[Gedmo\Slug(fields: ["type", "nom" , "categorie"])]
+    private ?string $template = null;
 
     #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'Diplome')]
     private Collection $baseAutorisations;
+
 
     public function __construct()
     {
@@ -145,8 +151,37 @@ class Diplome
         return $this;
     }
 
-    public function __toString(): string
+    /**
+     * Get the value of template
+     */ 
+    public function getTemplate()
     {
-        return $this->getType() . '-' . $this->getNom() . '-' . $this->getCategorie();
+        return $this->template;
     }
+
+    /**
+     * Set the value of template
+     *
+     * @return  self
+     */ 
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setTemplateValue()
+    {
+        $this->template = $this->type . '-' . $this->nom . '-' . $this->categorie;
+    }
+
+    public function __toString()
+    {
+        return $this->type . '-' . $this->nom . '-' . $this->categorie;
+    }
+
 }
