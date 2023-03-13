@@ -1,23 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestionnaire de cartes{% endblock %}
+{% block title %}Gestionnaire de cartes
+{% endblock %}
 
 {% block body %}
-<div class="container">
-<div class="row">
-    <div class="col-md-12">
-        <h1>Bienvenue dans votre gestionnaire de cartes</h1>
-    </div>
-</div>
-<h1 class="text-center mt-5">Rechercher des employes</h1>
-
-<div class="container">
-    {{ form_start(form) }}
-        {{ form_row(form.nom) }}
-        {{ form_row(form.prenom) }}
-        <button type="submit">Rechercher</button>
-    {{ form_end(form) }}
-    
-</div>
-
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center m-5 text-white">Bienvenue dans votre gestionnaire de cartes</h1>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<h2 class="text-center">Rechercher des employes</h2>
+			</div>
+			<div class="card-body p-5">
+				{{ form_start(form) }}
+				{{ form_row(form.nom) }}
+				{{ form_row(form.prenom) }}
+				<button class="btn btn-primary mt-5" type="submit">Rechercher</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

@@ -15,11 +15,20 @@ class EmployeSearchFormType extends AbstractType
         $builder
             ->add('nom',TextType::class, [
                 'label' => 'Nom',
-                'required' => false,
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Nom du collaborateur',            
+                ],
+                'help' => 'Entrez le nom de l\'employé',
+                
             ])
             ->add('prenom',TextType::class, [
                 'label' => 'Prénom',
-                'required' => false,
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Prénom du collaborateur',
+                ],
+                'help' => 'Entrez le prénom de l\'employé',
             ])
             
         ;

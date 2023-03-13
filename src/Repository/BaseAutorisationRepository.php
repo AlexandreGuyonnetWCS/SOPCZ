@@ -39,42 +39,41 @@ class BaseAutorisationRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByNom($value): array
+    public function findByNomEtPrenom(string $nom, string $prenom): array
     {
+
         return $this->createQueryBuilder('b')
             ->join('b.Employe', 'e')
-            ->andWhere('e.nom = :val')
-            ->setParameter('val', $value)
+            ->andWhere('e.nom = :nom')
+            ->andWhere('e.prenom = :prenom')
+            ->setParameter('nom', $nom)
+            ->setParameter('prenom', $prenom)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-    
+    //    /**
+    //     * @return BaseAutorisation[] Returns an array of BaseAutorisation objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('b')
+    //            ->andWhere('b.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('b.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-
-//    /**
-//     * @return BaseAutorisation[] Returns an array of BaseAutorisation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?BaseAutorisation
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?BaseAutorisation
+    //    {
+    //        return $this->createQueryBuilder('b')
+    //            ->andWhere('b.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

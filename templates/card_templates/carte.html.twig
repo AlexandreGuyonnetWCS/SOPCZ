@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Carte</title>
+		<style>
+			body {
+				... display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.card-container {
+				background: white;
+				border-radius: 10px;
+				width: 22rem;
+				height: 12rem;
+				position: relative;
+				margin-top: 2rem;
+				margin-bottom: 2rem;
+				margin-left: 10rem;
+			}
+			.card-header {
+				font-size: 1rem;
+				font-family: sans-serif;
+				background-color: #000059;
+				color: white;
+				height: 2.5rem;
+				border-radius: 10px 10px 0 0;
+			}
+			.card-photo {
+				position: absolute;
+				top: 0.5rem;
+				left: 1rem;
+				width: 4.5rem;
+				height: 6rem;
+				border-radius: 5%;
+				background-color: white;
+			}
+			.photo {
+				width: 4.5rem;
+				height: 6rem;
+				border-radius: 5%;
+			}
+			.logo {
+				position: absolute;
+				height: 2rem;
+				top: 5px;
+				right: 5px;
+
+
+			}
+			.card-intitule {
+				position: relative;
+				font-size: 1rem;
+				font-family: sans-serif;
+				font-weight: bold;
+				color: black;
+				left: 6rem;
+				text-decoration: underline;
+				padding-top: 0.5rem;
+			}
+			.card-body {
+				font-size: 1rem;
+				font-family: sans-serif;
+				background-color: #f4e3d7;
+				color: black;
+				height: 7rem;
+			}
+			.card-body-2 {
+				font-size: 0.5rem;
+				font-family: sans-serif;
+				font-weight: bold;
+				background-color: #f4e3d7;
+				color: black;
+				height: 8rem;
+				border-radius: 10px 10px 0 0;
+				padding: 0.5rem;
+				
+			}
+			.card-nom {
+				position: relative;
+				top: 3rem;
+				left: 2rem;
+				font-size: 1.5rem;
+				font-family: sans-serif;
+				font-weight: bold;
+				color: black;
+			}
+			.card-footer {
+				font-size: 1rem;
+				font-family: sans-serif;
+				background-color: #aa0000;
+				color: white;
+				height: 2.5rem;
+				border-radius: 0 0 10px 10px;
+			}
+			.card-diplome-logo {
+				position: relative;
+				top: 0.5rem;
+				left: 0.5rem;
+				height: 1.5rem;
+			}
+			.card-diplome-type {
+				position: relative;
+				top: -1.5rem;
+				left: 4rem;
+				font-size: 0.8rem;
+				font-family: sans-serif;
+				font-weight: bold;
+				color: black;
+				background-color: white;
+				border-radius: 5px 0 0 5px;
+				border: 1px solid white;
+				height: 13px;
+				padding: 0.5rem;
+				width: 5rem;
+				text-align: center;
+			}
+			.card-diplome-nom {
+				position: relative;
+				top: -55px;
+				left: 10.1rem;
+				font-size: 0.8rem;
+				font-family: sans-serif;
+				font-weight: bold;
+				color: white;
+				background-color: #aa0000;
+				border-radius: 0 5px 5px 0;
+				border-top: 1px solid white;
+				border-right: 1px solid white;
+				border-bottom: 1px solid white;
+				height: 13px;
+				padding: 0.5rem;
+				width: 10rem;
+				text-align: left;
+			}
+			.card-dg {
+				position: relative;
+				top: 0.25rem;
+				left: 0.5rem;
+				font-size: 0.5rem;
+				font-family: sans-serif;
+				font-weight: bold;
+				color: black;
+				background-color: white;
+				border-radius: 5px 0 0 5px;
+				border: 1px solid white;
+				height: 1rem;
+				padding: 0.5rem;
+				width: 12rem;
+				text-align: left;
+			}
+			.card-signature {
+				position: relative;
+				top: -1.85rem;
+				left: 13.5rem;
+				height: 2rem;
+				width: 8rem;
+				background-color: white;
+				border-radius: 0 5px 5px 0;
+				border: 1px solid white;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="card-container">
+			<div class="card-header">
+				{% for entreprise in entreprise %}
+					<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
+				{% endfor %}
+			</div>
+			<div class="card-photo">
+				{% for employe in employe %}
+					<img class="photo" src="{{ asset('uploads/employes/' ~ employe.photo) }}"/>
+				{% endfor %}
+			</div>
+
+			<div class="card-body">
+				<div class="card-intitule">AUTORISATION DE CONDUITE</div>
+				<div class="card-nom">
+					{% for employe in employe %}
+						{{ employe.genre }}
+						{{ employe.nom }}
+						{{ employe.prenom }}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="card-footer">
+
+				{% for diplome in baseAutorisations.diplome %}
+					<div>
+						<img class="card-diplome-logo" src=" {{ asset('uploads/images/' ~ diplome.image )}}" alt=""/>
+					</div>
+					<div class="card-diplome-type">
+						{{ diplome.type }}
+					</div>
+					<div class="card-diplome-nom">
+						{{ diplome.nom }}
+						{{ diplome.categorie }}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+			{% for entreprise in entreprise %}
+				<div class="card-container">
+					<div class="card-body-2">
+						Je soussigné,
+							{{ entreprise.genreDirecteur }}
+							{{ entreprise.nomDirecteur }}
+							{{ entreprise.prenomDirecteur }} , Directeur Général ,
+							<br>
+							<br>
+							 certifie que
+							{% for employe in employe %}
+								{{ employe.genre}}
+								{{ employe.nom}}
+								{{employe.prenom}}
+								<br>
+								qui occupe le poste de
+								{{ employe.poste }}
+								<br><br>
+								m'a présenté le diplôme suivant :
+								{% for diplome in baseAutorisations.diplome %}
+									{{ diplome.type }}
+									{{ diplome.nom }}
+									{{ diplome.categorie }}
+									<br><br>
+									délivré par
+									{% for centre in baseAutorisations.Centre %}
+										{{ centre.nom }}
+									{% endfor %}
+								
+									Aptitude médicale validée par l'AMCO en :
+									{{ employe.amco|date('m/Y') }}
+									<br><br>
+									En foi de quoi j'autorise :
+									{{ employe.genre}}
+									{{ employe.nom}}
+									{{employe.prenom}}
+									<br>
+									A conduire les engins correspondant aux categories:
+									{{ diplome.categorie }}
+									<br>
+									<br>
+									Fait le :
+									{{ "now"|date('d/m/Y') }} validité :
+									{{ diplome.validite }}
+									<br>
+							
+						
+					</div>
+					<div class="card-footer">
+						<div class="card-dg">
+						
+							{{ entreprise.genreDirecteur }}
+							{{ entreprise.nomDirecteur }}
+							{{ entreprise.prenomDirecteur }}
+							<br>Directeur Général
+							</div>
+							<div>
+								<img  class="card-signature" src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/>
+							</div>
+						{% endfor %}
+						{% endfor %}
+						{% endfor %}
+			
+					</div>
+				</div>
+			</div>
+			</body>
+		</body>
+	</body>
+</html>

@@ -28,7 +28,7 @@ class Employe
     private ?string $poste = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $amco = null;
+    private ?\DateTime $amco = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
@@ -97,12 +97,12 @@ class Employe
         return $this;
     }
 
-    public function getAmco(): ?\DateTimeImmutable
+    public function getAmco(): ?\DateTime
     {
         return $this->amco;
     }
 
-    public function setAmco(?\DateTimeImmutable $amco): self
+    public function setAmco(?\DateTime $amco): self
     {
         $this->amco = $amco;
 

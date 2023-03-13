@@ -1,87 +1,73 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<h1 class="text-center mt-5">Résultats de la recherche</h1>
+	<h1 class="text-center text-white mt-5 mb-3">Résultats de la recherche</h1>
 	<div class="container">
 		{% if employe|length %}
-			<table>
-				<thead>
-					<tr>
-						<th>Employe</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for employe in employe %}
-						<tr>
-							<td>{{ employe.genre }}
-								{{ employe.nom }}
-								{{ employe.prenom }}</td>
-						</tr>
-						<tr>
-							<td>
-								département :
-								{{ employe.departement}}
-							</td>
-						</tr>
-						<tr>
-							<td>
-								poste:
-								{{ employe.poste}}
-							</td>
-						</tr>
-						<tr>
-							<td>
-								photo :
-								<img src="{{ asset('uploads/employes/' ~ employe.photo) }}" alt="photo" width="100px" height="100px"></td>
-						</tr>
-						<tr>
-							<td>
-								date de visite médicale:{{ employe.amco|date('d/m/Y')}}
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="row mt-5">
-									{% for baseAutorisation in baseAutorisations %}
-										{% for diplome in baseAutorisation.Diplome %}
-
-											<div class="col-auto">
-					<div class="card" style="width: 18rem;">
-						<div class="card-body">
-							<h5 class="card-title">{{ diplome.type }}</h5>
-							<h6 class="card-subtitle mb-2 text-muted">{{ diplome.nom }}</h6>
-							<p class="card-text">{{ diplome.categorie }}</p>
+			{% for employe in employe %}
+				<div class="card mb-5">
+					<div class="card-header">
+						<h3 class="card-title text-center">Fiche Collaborateur</h3>
+					</div>
+					<div class="row g-0">
+						<div class="col-md-3">
+							<div class="card-image-top"><img src="{{ asset('uploads/employes/' ~ employe.photo) }}" alt="photo" class="img-fluid"></div>
+						</div>
+						<div class="col-md-9">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">{{ employe.genre }}
+									{{ employe.nom }}
+									{{ employe.prenom }}</li>
+								<li class="list-group-item">Département :
+									{{ employe.departement}}</li>
+								<li class="list-group-item">Poste :
+									{{ employe.poste}}</li>
+								<li class="list-group-item">Date de visite médicale :
+									{{ employe.amco|date('d/m/Y')}}</li>
+							</div>
 						</div>
 					</div>
-				</div>
-	{% for entreprise in entreprise %}
-		<div class="col-auto">
-			<div class="card" style="width: 18rem;">
-				<div class="card-body">
-					<h5 class="card-title">{{ entreprise.nom }}</h5>
-					<h6 class="card-subtitle mb-2 text-muted">{{ entreprise.adresse }}</h6>
+				{% endfor %}
 
-					<p class="card-text">{{ entreprise.contacte }}</p>
-					<p class="card-text">{{ entreprise.nomDirecteur }}</p>
-				</div>
-			</div>
-		</div>
-	{% endfor %}
+				<a class="btn btn-primary mb-5" href="{{ path('index') }}">Retour à la recherche</a>
+				<div class="row">
+					{% for baseAutorisation in baseAutorisations %}
+						{% for diplome in baseAutorisation.Diplome %}
 
-											<div class="mb-3">
-												<a class="linkNav" href="{{ path('carte_pdf', { id: baseAutorisation.id }) }}">Télécharger la carte au format pdf</a>
-											</div>
-
+							<div class="col-auto mb-5 mx-auto">
+								<div class="card" style="width: 18rem;">
+									<img src="{{ asset('uploads/images/'~ diplome.image ) }}" class="card-img-top" alt="{{ diplome.template }}">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">{{ diplome.type }}</li>
+										<li class="list-group-item">{{ diplome.nom }}</li>
+										<li class="list-group-item">{{ diplome.categorie }}</li>
+										<li class="list-group-item">Fait le :
+											{{ baseAutorisation.createdAt|date('d/m/Y') }}</li>
+										<li class="list-group-item">validité :
+											{{ diplome.validite }}</li>
+										{% for centre in baseAutorisation.Centre %}
+											<li class="list-group-item">{{ centre.nom }}</li>
+											<li class="list-group-item">{{ centre.adresse }}</li>
+											<li class="list-group-item">{{ centre.codePostal }}</li>
+											<li class="list-group-item">{{ centre.ville }}</li>
+											<li class="list-group-item">{{ centre.telephone }}</li>
+											<li class="list-group-item">{{ centre.mail }}</li>
 										{% endfor %}
-									{% endfor %}
+									</ul>
+									<div class="card-footer">
+										<a class="btn btn-primary" href="{{ path('carte_pdf', { id: baseAutorisation.id }) }}">Télécharger</a>
+										<a class="btn btn-primary" href="{{ path('show', { id: baseAutorisation.id }) }}">Voir</a>
+									</div>
 								</div>
-							</td>
-						</tr>
+							{% endfor %}
+						</div>
 					{% endfor %}
-				</tbody>
-			</table>
-		{% else %}
-			<p>Aucun résultat</p>
-		{% endif %}
-	</div>
-{% endblock %}
+				</div>
+			{% else %}
+				<div class="text-center">
+					<p class="text-white text-center mt-5">Nous sommes désolés mais votre recherche ne correspond à aucun collaborateur</p>
+					<a class="btn btn-primary mt-5" href="{{ path('index') }}">Retour à la recherche</a>
+				</div>
+			{% endif %}
+		</div>
+	{% endblock %}

@@ -11,12 +11,12 @@ class PdfService
 
     public function __construct()
     {
-        $this->domPdf = new DomPdf();
+        $this->domPdf = new Dompdf();
 
         $pdfOptions = new Options();
 
         $pdfOptions->set('defaultFont', 'Garamond');
-
+        $pdfOptions->set('isRemoteEnabled', true);
         $this->domPdf->setOptions($pdfOptions);
     }
 

@@ -17,26 +17,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class EmployeSearchController extends AbstractController
 {
     #[Route('/carte', name: 'index')]
-    public function search(Request $request, EmployeRepository $employeRepository ,BaseAutorisationRepository $baseAutorisationRepository, EntrepriseRepository $entrepriseRepository): Response
+    public function search(Request $request, EmployeRepository $employeRepository, BaseAutorisationRepository $baseAutorisationRepository): Response
     {
         $form = $this->createForm(EmployeSearchFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $searchData = $form->getData();
-            $employes = $searchData->getNom();
+            $employeNom = $searchData->getNom();
+            $employePrenom = $searchData->getPrenom();
 
             // Recherchez les utilisateurs qui correspondent aux critères de recherche
-            $employe = $employeRepository->findByNom($employes);
-            $baseAutorisations = $baseAutorisationRepository->findByNom($employes);
-            $entreprise = $entrepriseRepository->findAll();
-            
+            $employe = $employeRepository->findBy(['nom' => $employeNom, 'prenom' => $employePrenom]);
+            $baseAutorisations = $baseAutorisationRepository->findByNomEtPrenom($employeNom, $employePrenom);
 
             return $this->render('employe/search_results.html.twig', [
                 'employe' => $employe,
                 'baseAutorisations' => $baseAutorisations,
-                'entreprise' => $entreprise,
-
             ]);
         }
 
@@ -46,17 +43,16 @@ class EmployeSearchController extends AbstractController
     }
 
     #[Route('carte/{id}/pdf/', name: 'carte_pdf', methods: ['GET'])]
-    
-    public function cardToPdf ( DiplomeRepository $diplomeRepository, BaseAutorisationRepository $baseAutorisationRepository, EntrepriseRepository $entrepriseRepository, PdfService $pdfService, $id): Response
+
+    public function cardToPdf( BaseAutorisationRepository $baseAutorisationRepository, EntrepriseRepository $entrepriseRepository, PdfService $pdfService, $id): Response
     {
         $baseAutorisations = $baseAutorisationRepository->findOneBy(['id' => $id]);
         $employe = $baseAutorisationRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
         $diplome = $baseAutorisationRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
         $entreprise = $entrepriseRepository->findAll();
-        $template = $diplomeRepository->findOneBy(['id' => $diplome])->getTemplate();
-        
 
-        $html = $this->renderView('card_templates/'. $template .'.html.twig', [
+
+        $html = $this->renderView('card_templates/carte.html.twig', [
             'employe' => $employe,
             'baseAutorisations' => $baseAutorisations,
             'diplome' => $diplome,
@@ -67,4 +63,23 @@ class EmployeSearchController extends AbstractController
 
         return new Response();
     }
+
+    #[Route('carte/{id}/show', name: 'show', methods: ['GET'])]
+    public function showCard(DiplomeRepository $diplomeRepository, BaseAutorisationRepository $baseAutorisationRepository, EntrepriseRepository $entrepriseRepository, PdfService $pdfService, $id): Response
+    {
+        $baseAutorisations = $baseAutorisationRepository->findOneBy(['id' => $id]);
+        $employe = $baseAutorisationRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
+        $diplome = $baseAutorisationRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
+        $entreprise = $entrepriseRepository->findAll();
+        $template = $diplomeRepository->findOneBy(['id' => $diplome])->getTemplate();
+
+
+        return $this->render('card_templates/carte.html.twig', [
+            'employe' => $employe,
+            'baseAutorisations' => $baseAutorisations,
+            'diplome' => $diplome,
+            'entreprise' => $entreprise,
+        ]);
+    }
+
 }

@@ -8,10 +8,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
-{   
+{
     private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher) 
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         $this->passwordHasher = $passwordHasher;
     }
@@ -19,6 +19,8 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $user = new User();
+        $user->setNom('user');
+        $user->setPrenom('user');
         $user->setEmail('user@localhost.fr');
         $user->setRoles(['ROLE_USER']);
         $hashedPassword = $this->passwordHasher->hashPassword($user, 'user');
@@ -26,6 +28,8 @@ class UserFixtures extends Fixture
         $manager->persist($user);
 
         $admin = new User();
+        $admin->setNom('admin');
+        $admin->setPrenom('admin');
         $admin->setEmail('admin@localhost.fr');
         $admin->setRoles(['ROLE_ADMIN']);
         $hashedPassword = $this->passwordHasher->hashPassword($admin, 'admin');

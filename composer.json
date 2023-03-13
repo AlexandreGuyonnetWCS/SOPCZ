@@ -13,6 +13,7 @@
         "dompdf/dompdf": "^2.0",
         "easycorp/easyadmin-bundle": "^4.5",
         "fakerphp/faker": "^1.21",
+        "guzzlehttp/guzzle": "^7.0",
         "knplabs/knp-snappy-bundle": "^1.9",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/console": "6.2.*",
@@ -77,6 +78,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "ottaviano/faker-gravatar": "^0.2.0",
         "symfony/debug-bundle": "6.2.*",
         "symfony/stopwatch": "6.2.*",
         "symfony/web-profiler-bundle": "6.2.*"
