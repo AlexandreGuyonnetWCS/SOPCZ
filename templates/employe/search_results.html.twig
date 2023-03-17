@@ -34,7 +34,7 @@
 					{% for baseAutorisation in baseAutorisations %}
 						{% for diplome in baseAutorisation.Diplome %}
 
-							<div class="col-auto mb-5 mx-auto">
+							<div class="col-auto mb-5">
 								<div class="card" style="width: 18rem;">
 									<img src="{{ asset('uploads/images/'~ diplome.image ) }}" class="card-img-top" alt="{{ diplome.template }}">
 									<ul class="list-group list-group-flush">

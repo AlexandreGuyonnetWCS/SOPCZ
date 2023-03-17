@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
 use App\Entity\User;
 use Symfony\Component\Form\FormEvents;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -39,9 +41,46 @@ class UserCrudController extends AbstractCrudController
         ];
 
         return [
-        TextField::new('nom'),
-        TextField::new('prenom'),
-        EmailField::new('email'),
+        TextField::new('nom')
+            ->setFormTypeOption(
+                'constraints',
+                [
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Le nom doit contenir au moins 2 caractères',
+                        'max' => 255,
+                    ]),
+                    new Regex([
+                        'pattern' => "/^[a-zA-Z]+$/",
+                        'message' => "Le nom '{{ value }}' n'est pas valide."
+                    ])
+                ]
+            ),
+        TextField::new('prenom')
+            ->setFormTypeOption(
+                'constraints',
+                [
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Le prénom doit contenir au moins 2 caractères',
+                        'max' => 255,
+                    ]),
+                    new Regex([
+                        'pattern' => "/^[a-zA-Z]+$/",
+                        'message' => "Le prénom '{{ value }}' n'est pas valide."
+                    ])
+                ]
+            ),
+        EmailField::new('email')
+            ->setFormTypeOption(
+                'constraints',
+                [
+                    new Regex([
+                        'pattern' => "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/",
+                        'message' => "L\'email '{{ value }}' n'est pas valide."
+                    ])
+                ]
+            ),
         ChoiceField::new('roles')
                     ->allowMultipleChoices()
                     ->setChoices([
@@ -55,6 +94,17 @@ class UserCrudController extends AbstractCrudController
                         'first_options' => ['label' => 'Mot de passe'],
                         'second_options' => ['label' => 'Répéter le mot de passe'],
                         'mapped' => false,
+                        'constraints' => [
+                            new Length([
+                                'min' => 8,
+                                'minMessage' => 'Le mot de passe doit contenir au moins 8 caractères',
+                                'max' => 25,
+                            ]),
+                            new Regex([
+                                'pattern' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*., ?]).+$/",
+                                'message' => "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
+                            ])
+                        ],
                     ])
                     ->setRequired($pageName === Crud::PAGE_NEW)
                     ->onlyOnForms()

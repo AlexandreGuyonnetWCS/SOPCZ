@@ -6,8 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use function PHPSTORM_META\type;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,7 +18,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/", message: "L'email '{{ value }}' n'est pas valide.")]
     private ?string $email = null;
+    
 
     #[ORM\Column(type:"json")]
     private  $roles = [
@@ -28,13 +31,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(min: 8, minMessage: "Le mot de passe doit contenir au moins 8 caractères")]
+    #[Assert\Regex(pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*., ?]).+$/", message: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(min: 2, minMessage: "Le nom doit contenir au moins 2 caractères")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z]+$/", message: "Le nom '{{ value }}' n'est pas valide.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(min: 2, minMessage: "Le prénom doit contenir au moins 2 caractères")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z]+$/", message: "Le prénom '{{ value }}' n'est pas valide.")]
     private ?string $prenom = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private $is_verified = false;
 
     public function getId(): ?int
     {
@@ -124,6 +136,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): self
+    {
+        $this->is_verified = $is_verified;
 
         return $this;
     }
