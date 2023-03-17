@@ -8,7 +8,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -19,12 +18,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: "L'email est obligatoire")]
-    #[Assert\Regex(pattern: "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/", message: "L'email '{{ value }}' n'est pas valide.")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/",
+        message: "L'email '{{ value }}' n'est pas valide."
+    )]
     private ?string $email = null;
-    
+
 
     #[ORM\Column(type:"json")]
-    private  $roles = [
+    private array $roles = [
     ];
 
     /**
@@ -32,7 +34,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\Length(min: 8, minMessage: "Le mot de passe doit contenir au moins 8 caractères")]
-    #[Assert\Regex(pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*., ?]).+$/", message: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial")]
+    #[Assert\Regex(
+        pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*., ?]).+$/",
+        message: "Le mot de passe doit contenir au moins une majuscule,
+        une minuscule, un chiffre et un caractère spécial"
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -46,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $is_verified = false;
+    private bool $isVerified = false;
 
     public function getId(): ?int
     {
@@ -110,7 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -142,12 +148,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getIsVerified(): ?bool
     {
-        return $this->is_verified;
+        return $this->isVerified;
     }
 
-    public function setIsVerified(bool $is_verified): self
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->is_verified = $is_verified;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

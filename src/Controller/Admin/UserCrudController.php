@@ -29,12 +29,12 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
-    public function __construct(public UserPasswordHasherInterface $userPasswordHasher) {
-
+    public function __construct(public UserPasswordHasherInterface $userPasswordHasher)
+    {
     }
 
     public function configureFields(string $pageName): iterable
-    {  
+    {
         $fields = [
             IdField::new('id')->hideOnForm(),
             EmailField::new('email'),
@@ -102,16 +102,18 @@ class UserCrudController extends AbstractCrudController
                             ]),
                             new Regex([
                                 'pattern' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*., ?]).+$/",
-                                'message' => "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial"
+                                'message' => "Le mot de passe doit contenir au moins une majuscule,
+                                une minuscule, un chiffre et un caractère spécial"
                             ])
                         ],
                     ])
                     ->setRequired($pageName === Crud::PAGE_NEW)
                     ->onlyOnForms()
-                    ->addCssClass('password-field'),  ];
+                    ->addCssClass('password-field'),
+                ];
                 $fields[] = $password;
-        
-                return $fields;            
+
+                return $fields;
     }
 
     public function configureActions(Actions $actions): Actions
@@ -121,7 +123,6 @@ class UserCrudController extends AbstractCrudController
         ->add(Crud::PAGE_INDEX, Action::DETAIL)
         ->add(Crud::PAGE_EDIT, Action::DETAIL)
         ;
-            
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -133,8 +134,9 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle('edit', 'Modifier l\'utilisateur');
     }
 
-    private function hashPassword() {
-        return function($event) {
+    private function hashPassword(): callable
+    {
+        return function ($event) {
             $form = $event->getForm();
             if (!$form->isValid()) {
                 return;
@@ -149,14 +151,20 @@ class UserCrudController extends AbstractCrudController
         };
     }
 
-    public function createNewFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
-    {
+    public function createNewFormBuilder(
+        EntityDto $entityDto,
+        KeyValueStore $formOptions,
+        AdminContext $context
+    ): FormBuilderInterface {
         $formBuilder = parent::createNewFormBuilder($entityDto, $formOptions, $context);
         return $this->addPasswordEventListener($formBuilder);
     }
 
-    public function createEditFormBuilder(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormBuilderInterface
-    {
+    public function createEditFormBuilder(
+        EntityDto $entityDto,
+        KeyValueStore $formOptions,
+        AdminContext $context
+    ): FormBuilderInterface {
         $formBuilder = parent::createEditFormBuilder($entityDto, $formOptions, $context);
         return $this->addPasswordEventListener($formBuilder);
     }

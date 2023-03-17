@@ -45,7 +45,7 @@
 											{{ baseAutorisation.createdAt|date('d/m/Y') }}</li>
 										<li class="list-group-item">validité :
 											{{ diplome.validite }}</li>
-										{% for centre in baseAutorisation.Centre %}
+										{% for centre in baseAutorisation.centre %}
 											<li class="list-group-item">{{ centre.nom }}</li>
 											<li class="list-group-item">{{ centre.adresse }}</li>
 											<li class="list-group-item">{{ centre.codePostal }}</li>

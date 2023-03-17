@@ -2,11 +2,10 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Centre;  
+use App\Entity\Centre;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-
 
 class CentreFixtures extends Fixture
 {

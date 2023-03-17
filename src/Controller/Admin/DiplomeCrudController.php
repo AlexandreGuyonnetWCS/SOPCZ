@@ -19,11 +19,11 @@ class DiplomeCrudController extends AbstractCrudController
         return Diplome::class;
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            
+
             ChoiceField::new('type')->setChoices([
                 'CACES' => 'CACES',
                 'Habilitation' => 'Habilitation',
@@ -43,7 +43,7 @@ class DiplomeCrudController extends AbstractCrudController
                 'Echafaudage' => 'Echafaudage',
                 'Habilitation électique' => 'Habilitation électique',
                 'Travaux en hauteur' => 'Travaux en hauteur',
-            ]), 
+            ]),
             ChoiceField::new('categorie')->setChoices([
                 'A' => 'A',
                 'B1' => 'B1',
@@ -76,7 +76,7 @@ class DiplomeCrudController extends AbstractCrudController
                 'B1V' => 'B1V',
                 'B2V' => 'B2V',
                 'BC' => 'BC',
-                'BR' => 'BR',   
+                'BR' => 'BR',
             ]),
             TextField::new('description'),
             ChoiceField::new('validite')->setChoices([
@@ -99,8 +99,8 @@ class DiplomeCrudController extends AbstractCrudController
             ),
 
         ];
-    }  
-    
+    }
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -131,5 +131,4 @@ class DiplomeCrudController extends AbstractCrudController
                 return $action->setIcon('fa fa-trash');
             });
     }
-
 }

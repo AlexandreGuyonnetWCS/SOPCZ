@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmployeController extends AbstractController
-{   
+{
     #[Route('/employe', name: 'app_employe')]
     public function index(): Response
     {

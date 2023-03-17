@@ -24,35 +24,38 @@ class BaseAutorisationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('Employe')
+            AssociationField::new('employe')
             ->setLabel('Nom et prénom')
             ->setCrudController(EmployeCrudController::class)
             ->formatValue(function ($value, $entity) {
-                return implode(",",$entity->getEmploye()->toArray());})
+                return implode(",", $entity->getEmploye()->toArray());
+            })
             ->setFormTypeOption('choice_label', function ($employe) {
                 return $employe->getNom() . ' ' . $employe->getPrenom()
-            ;
+                ;
             }),
-            AssociationField::new('Diplome')
+            AssociationField::new('diplome')
             ->setCrudController(DiplomeCrudController::class)
             ->formatValue(function ($value, $entity) {
-                return implode(",",$entity->getDiplome()->toArray());})
+                return implode(",", $entity->getDiplome()->toArray());
+            })
             ->setFormTypeOption('choice_label', function ($diplome) {
                 return $diplome->getType() . ' ' . $diplome->getNom() . ' ' . $diplome->getCategorie();
             }),
 
-            AssociationField::new('Centre')
+            AssociationField::new('centre')
             ->setCrudController(CentreCrudController::class)
             ->formatValue(function ($value, $entity) {
-                return implode(",",$entity->getCentre()->toArray());})
+                return implode(",", $entity->getCentre()->toArray());
+            })
             ->setFormTypeOption('choice_label', function ($centre) {
                 return $centre->getNom();
             }),
-            DateField::new('CreatedAt')
+            DateField::new('createdAt')
             ->setFormat('dd/MM/yyyy')
             ->setHelp('Date de création de l\'autorisation')
             ->setLabel('Date de création'),
-            DateField::new('EndedAt')
+            DateField::new('endedAt')
             ->setFormat('dd/MM/yyyy')
             ->setHelp('Date de fin de l\'autorisation')
             ->setLabel('Date de fin'),
@@ -64,8 +67,20 @@ class BaseAutorisationCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Autorisation')
             ->setEntityLabelInPlural('Autorisations')
-            ->setSearchFields(['id', 'Employe.nom', 'Employe.prenom', 'Diplome.nom', 'Diplome.type', 'Diplome.categorie', 'Centre.nom', 'CreatedAt', 'EndedAt'])
-            ->setDefaultSort(['CreatedAt' => 'DESC'])
+            ->setSearchFields(
+                [
+                    'id',
+                    'employe.nom',
+                    'employe.prenom',
+                    'diplome.nom',
+                    'diplome.type',
+                    'diplome.categorie',
+                    'centre.nom',
+                    'createdAt',
+                    'endedAt'
+                ]
+            )
+            ->setDefaultSort(['createdAt' => 'DESC'])
             ->setPaginatorPageSize(30)
             ->setPageTitle(Crud::PAGE_INDEX, 'Liste des %entity_label_plural%')
             ->setPageTitle(Crud::PAGE_DETAIL, 'Détail de l\'%entity_label_singular%')

@@ -7,7 +7,7 @@ use Dompdf\Options;
 
 class PdfService
 {
-    private $domPdf;
+    private Dompdf $domPdf;
 
     public function __construct()
     {
@@ -20,14 +20,14 @@ class PdfService
         $this->domPdf->setOptions($pdfOptions);
     }
 
-    public function showPdfFile($html)
+    public function showPdfFile(string $html): void
     {
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
         $this->domPdf->stream("carte.pdf");
     }
 
-    public function generateBinaryPDF($html)
+    public function generateBinaryPDF(string $html): void
     {
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();

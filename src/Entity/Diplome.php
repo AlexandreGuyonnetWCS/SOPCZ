@@ -33,12 +33,12 @@ class Diplome
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
-    
+
     #[ORM\Column(length: 255, nullable: true, unique: true)]
     #[Gedmo\Slug(fields: ["type", "nom" , "categorie"])]
     private ?string $template = null;
 
-    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'Diplome')]
+    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'diplome')]
     private Collection $baseAutorisations;
 
 
@@ -153,8 +153,8 @@ class Diplome
 
     /**
      * Get the value of template
-     */ 
-    public function getTemplate()
+     */
+    public function getTemplate(): ?string
     {
         return $this->template;
     }
@@ -163,8 +163,8 @@ class Diplome
      * Set the value of template
      *
      * @return  self
-     */ 
-    public function setTemplate($template)
+     */
+    public function setTemplate(?string $template): self
     {
         $this->template = $template;
 
@@ -174,7 +174,7 @@ class Diplome
     /**
      * @ORM\PrePersist()
      */
-    public function setTemplateValue()
+    public function setTemplateValue(): void
     {
         $this->template = $this->type . '-' . $this->nom . '-' . $this->categorie;
     }
@@ -183,5 +183,4 @@ class Diplome
     {
         return $this->type . '-' . $this->nom . '-' . $this->categorie;
     }
-
 }

@@ -20,7 +20,7 @@ class EmployeFixtures extends Fixture
             $employe->setGenre($faker->randomElement(['Monsieur', 'Madame', 'Mademoiselle']));
             $employe->setNom($faker->lastName());
             $employe->setPrenom($faker->firstName());
-            $employe->setDepartement($faker->numberBetween(1, 6));
+            $employe->setDepartement($faker->randomElement(['1', '2', '3', '4', '5']));
             $employe->setPoste($faker->randomElement(['Fontainier', 'Chauffagiste', 'Plombier', 'Electricien']));
             $employe->setAmco($faker->dateTimeBetween('-10 years', 'now'));
             $employe->setPhoto('https://picsum.photos/800/600?random=' . $i);

@@ -13,16 +13,16 @@ class EmployeSearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom',TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Nom du collaborateur',            
+                    'placeholder' => 'Nom du collaborateur',
                 ],
                 'help' => 'Entrez le nom de l\'employé',
-                
+
             ])
-            ->add('prenom',TextType::class, [
+            ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
                 'required' => true,
                 'attr' => [
@@ -30,7 +30,7 @@ class EmployeSearchFormType extends AbstractType
                 ],
                 'help' => 'Entrez le prénom de l\'employé',
             ])
-            
+
         ;
     }
 

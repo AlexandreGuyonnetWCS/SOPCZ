@@ -17,8 +17,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class EmployeSearchController extends AbstractController
 {
     #[Route('/carte', name: 'index')]
-    public function search(Request $request, EmployeRepository $employeRepository, BaseAutorisationRepository $baseAutorisationRepository): Response
-    {
+    public function search(
+        Request $request,
+        EmployeRepository $employeRepository,
+        BaseAutorisationRepository $baseRepository
+    ): Response {
         $form = $this->createForm(EmployeSearchFormType::class);
         $form->handleRequest($request);
 
@@ -29,7 +32,7 @@ class EmployeSearchController extends AbstractController
 
             // Recherchez les utilisateurs qui correspondent aux critères de recherche
             $employe = $employeRepository->findBy(['nom' => $employeNom, 'prenom' => $employePrenom]);
-            $baseAutorisations = $baseAutorisationRepository->findByNomEtPrenom($employeNom, $employePrenom);
+            $baseAutorisations = $baseRepository->findByNomEtPrenom($employeNom, $employePrenom);
 
             return $this->render('employe/search_results.html.twig', [
                 'employe' => $employe,
@@ -44,11 +47,15 @@ class EmployeSearchController extends AbstractController
 
     #[Route('carte/{id}/pdf/', name: 'carte_pdf', methods: ['GET'])]
 
-    public function cardToPdf( BaseAutorisationRepository $baseAutorisationRepository, EntrepriseRepository $entrepriseRepository, PdfService $pdfService, $id): Response
-    {
-        $baseAutorisations = $baseAutorisationRepository->findOneBy(['id' => $id]);
-        $employe = $baseAutorisationRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
-        $diplome = $baseAutorisationRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
+    public function cardToPdf(
+        BaseAutorisationRepository $baseRepository,
+        EntrepriseRepository $entrepriseRepository,
+        PdfService $pdfService,
+        int $id
+    ): Response {
+        $baseAutorisations = $baseRepository->findOneBy(['id' => $id]);
+        $employe = $baseRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
+        $diplome = $baseRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
         $entreprise = $entrepriseRepository->findAll();
 
 
@@ -65,14 +72,18 @@ class EmployeSearchController extends AbstractController
     }
 
     #[Route('carte/{id}/show', name: 'show', methods: ['GET'])]
-    public function showCard(DiplomeRepository $diplomeRepository, BaseAutorisationRepository $baseAutorisationRepository, EntrepriseRepository $entrepriseRepository, PdfService $pdfService, $id): Response
-    {
-        $baseAutorisations = $baseAutorisationRepository->findOneBy(['id' => $id]);
-        $employe = $baseAutorisationRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
-        $diplome = $baseAutorisationRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
-        $entreprise = $entrepriseRepository->findAll();
-        $template = $diplomeRepository->findOneBy(['id' => $diplome])->getTemplate();
+    public function showCard(
+        DiplomeRepository $diplomeRepository,
+        BaseAutorisationRepository $baseRepository,
+        EntrepriseRepository $entrepriseRepository,
+        int $id
+    ): Response {
 
+        $baseAutorisations = $baseRepository->findOneBy(['id' => $id]);
+        $employe = $baseRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
+        $diplome = $baseRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
+        $entreprise = $entrepriseRepository->findAll();
+        $diplomeRepository->findOneBy(['id' => $diplome])->getTemplate();
 
         return $this->render('card_templates/carte.html.twig', [
             'employe' => $employe,
@@ -81,5 +92,4 @@ class EmployeSearchController extends AbstractController
             'entreprise' => $entreprise,
         ]);
     }
-
 }

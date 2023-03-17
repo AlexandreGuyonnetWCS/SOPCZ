@@ -14,37 +14,37 @@ class Entreprise
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Nom = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Adresse = null;
+    private ?string $adresse = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $CodePostal = null;
+    private ?string $codePostal = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Ville = null;
+    private ?string $ville = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $NomDirecteur = null;
+    private ?string $nomDirecteur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $PrenomDirecteur = null;
+    private ?string $prenomDirecteur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $SignatureDirecteur = null;
+    private ?string $signatureDirecteur = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Siret = null;
+    private ?string $siret = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Contacte = null;
+    private ?string $contacte = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $GenreDirecteur = null;
+    private ?string $genreDirecteur = null;
 
     public function getId(): ?int
     {
@@ -53,36 +53,36 @@ class Entreprise
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
-    public function setNom(?string $Nom): self
+    public function setNom(?string $nom): self
     {
-        $this->Nom = $Nom;
+        $this->nom = $nom;
 
         return $this;
     }
 
     public function getAdresse(): ?string
     {
-        return $this->Adresse;
+        return $this->adresse;
     }
 
-    public function setAdresse(?string $Adresse): self
+    public function setAdresse(?string $adresse): self
     {
-        $this->Adresse = $Adresse;
+        $this->adresse = $adresse;
 
         return $this;
     }
 
     public function getCodePostal(): ?string
     {
-        return $this->CodePostal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(?string $CodePostal): self
+    public function setCodePostal(?string $codePostal): self
     {
-        $this->CodePostal = $CodePostal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -101,84 +101,84 @@ class Entreprise
 
     public function getVille(): ?string
     {
-        return $this->Ville;
+        return $this->ville;
     }
 
-    public function setVille(?string $Ville): self
+    public function setVille(?string $ville): self
     {
-        $this->Ville = $Ville;
+        $this->ville = $ville;
 
         return $this;
     }
 
     public function getNomDirecteur(): ?string
     {
-        return $this->NomDirecteur;
+        return $this->nomDirecteur;
     }
 
-    public function setNomDirecteur(?string $NomDirecteur): self
+    public function setNomDirecteur(?string $nomDirecteur): self
     {
-        $this->NomDirecteur = $NomDirecteur;
+        $this->nomDirecteur = $nomDirecteur;
 
         return $this;
     }
 
     public function getPrenomDirecteur(): ?string
     {
-        return $this->PrenomDirecteur;
+        return $this->prenomDirecteur;
     }
 
-    public function setPrenomDirecteur(?string $PrenomDirecteur): self
+    public function setPrenomDirecteur(?string $prenomDirecteur): self
     {
-        $this->PrenomDirecteur = $PrenomDirecteur;
+        $this->prenomDirecteur = $prenomDirecteur;
 
         return $this;
     }
 
     public function getSignatureDirecteur(): ?string
     {
-        return $this->SignatureDirecteur;
+        return $this->signatureDirecteur;
     }
 
-    public function setSignatureDirecteur(?string $SignatureDirecteur): self
+    public function setSignatureDirecteur(?string $signatureDirecteur): self
     {
-        $this->SignatureDirecteur = $SignatureDirecteur;
+        $this->signatureDirecteur = $signatureDirecteur;
 
         return $this;
     }
 
     public function getSiret(): ?string
     {
-        return $this->Siret;
+        return $this->siret;
     }
 
-    public function setSiret(?string $Siret): self
+    public function setSiret(?string $siret): self
     {
-        $this->Siret = $Siret;
+        $this->siret = $siret;
 
         return $this;
     }
 
     public function getContacte(): ?string
     {
-        return $this->Contacte;
+        return $this->contacte;
     }
 
-    public function setContacte(?string $Contacte): self
+    public function setContacte(?string $contacte): self
     {
-        $this->Contacte = $Contacte;
+        $this->contacte = $contacte;
 
         return $this;
     }
 
     public function getGenreDirecteur(): ?string
     {
-        return $this->GenreDirecteur;
+        return $this->genreDirecteur;
     }
 
-    public function setGenreDirecteur(?string $GenreDirecteur): self
+    public function setGenreDirecteur(?string $genreDirecteur): self
     {
-        $this->GenreDirecteur = $GenreDirecteur;
+        $this->genreDirecteur = $genreDirecteur;
 
         return $this;
     }

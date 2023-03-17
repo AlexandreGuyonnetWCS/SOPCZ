@@ -33,7 +33,7 @@ class Centre
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
-    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'Centre')]
+    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'centre')]
     private Collection $baseAutorisations;
 
     public function __construct()

@@ -36,7 +36,7 @@ class Employe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'Employe')]
+    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'employe')]
     private Collection $baseAutorisations;
 
     public function __construct()

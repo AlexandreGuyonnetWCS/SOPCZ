@@ -11,8 +11,7 @@ class BaseAutorisationFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('fr_FR');
-        $baseAutorisation = new BaseAutorisation();
-
+        // $faker = Factory::create('fr_FR');
+        // $baseAutorisation = new BaseAutorisation();
     }
 }
