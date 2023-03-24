@@ -34,9 +34,8 @@
 					{% for baseAutorisation in baseAutorisations %}
 						{% for diplome in baseAutorisation.Diplome %}
 
-							<div class="col-auto mb-5">
+							<div class="col-auto mb-5 mt-5">
 								<div class="card" style="width: 18rem;">
-									<img src="{{ asset('uploads/images/'~ diplome.image ) }}" class="card-img-top" alt="{{ diplome.template }}">
 									<ul class="list-group list-group-flush">
 										<li class="list-group-item">{{ diplome.type }}</li>
 										<li class="list-group-item">{{ diplome.nom }}</li>
@@ -47,11 +46,6 @@
 											{{ diplome.validite }}</li>
 										{% for centre in baseAutorisation.centre %}
 											<li class="list-group-item">{{ centre.nom }}</li>
-											<li class="list-group-item">{{ centre.adresse }}</li>
-											<li class="list-group-item">{{ centre.codePostal }}</li>
-											<li class="list-group-item">{{ centre.ville }}</li>
-											<li class="list-group-item">{{ centre.telephone }}</li>
-											<li class="list-group-item">{{ centre.mail }}</li>
 										{% endfor %}
 									</ul>
 									<div class="card-footer">
