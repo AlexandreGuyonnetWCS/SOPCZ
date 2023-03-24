@@ -1,0 +1,9 @@
+{% block body %}
+    <p>Bonjour {{ user.nom }} {{ user.prenom }},</p>
+
+    <p>Pour activer votre compte, merci de cliquer sur le lien ci-dessous:</p>
+
+    <p><a href="{{ path('app_user_verify_email', {'token': user.emailVerificationToken}) }}">Verifier votre adresse mail</a></p>
+
+    <p>Merci et à bientôt sur notre site.</p>
+{% endblock %}

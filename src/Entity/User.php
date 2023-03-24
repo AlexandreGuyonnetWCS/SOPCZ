@@ -7,8 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cette adresse email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,11 +19,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank(message: "L'email est obligatoire")]
-    #[Assert\Regex(
-        pattern: "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/",
-        message: "L'email '{{ value }}' n'est pas valide."
-    )]
     private ?string $email = null;
 
 
@@ -53,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $emailToken;
 
     public function getId(): ?int
     {
@@ -154,6 +154,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function generateEmailVerificationToken(): void
+    {
+        $this->emailToken = bin2hex(random_bytes(32));
+    }
+
+    /**
+     * Get the value of emailVerificationToken
+     */
+    public function getEmailVerificationToken(): ?string
+    {
+        return $this->emailToken;
+    }
+
+    /**
+     * Set the value of emailVerificationToken
+     *
+     * @return  self
+     */
+    public function setEmailVerificationToken(?string $emailToken): self
+    {
+        $this->emailToken = $emailToken;
 
         return $this;
     }
