@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\BaseAutorisationRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: BaseAutorisationRepository::class)]
 class BaseAutorisation
@@ -136,5 +138,15 @@ class BaseAutorisation
         $this->employe->removeElement($employe);
 
         return $this;
+    }
+
+    public function getSixMonthsDates(): array
+    {
+        $dates = array();
+        for ($i = 0; $i < 6; $i++) {
+            $date = date('Y-m-d', strtotime("+$i months"));
+            $dates[] = $date;
+        }
+        return $dates;
     }
 }

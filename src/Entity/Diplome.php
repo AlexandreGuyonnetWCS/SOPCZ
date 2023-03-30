@@ -2,25 +2,23 @@
 
 namespace App\Entity;
 
+use App\Entity\BaseAutorisation;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use App\Repository\DiplomeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use function PHPUnit\Framework\returnSelf;
 
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
+
 class Diplome
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $categorie = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $validite = null;
@@ -31,16 +29,12 @@ class Diplome
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $type = null;
-
-    #[ORM\Column(length: 255, nullable: true, unique: true)]
-    #[Gedmo\Slug(fields: ["type", "nom" , "categorie"])]
-    private ?string $template = null;
+    // #[ORM\Column(length: 255, nullable: true, unique: true)]
+    // #[Gedmo\Slug(fields: ["type", "nom" , "categorie"])]
+    // private ?string $template = null;
 
     #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'diplome')]
     private Collection $baseAutorisations;
-
 
     public function __construct()
     {
@@ -50,30 +44,6 @@ class Diplome
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(?string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?string
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?string $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
     }
 
     public function getValidite(): ?string
@@ -112,18 +82,6 @@ class Diplome
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, BaseAutorisation>
      */
@@ -154,33 +112,33 @@ class Diplome
     /**
      * Get the value of template
      */
-    public function getTemplate(): ?string
-    {
-        return $this->template;
-    }
+    // public function getTemplate(): ?string
+    // {
+    //     return $this->template;
+    // }
 
-    /**
-     * Set the value of template
-     *
-     * @return  self
-     */
-    public function setTemplate(?string $template): self
-    {
-        $this->template = $template;
+    // /**
+    //  * Set the value of template
+    //  *
+    //  * @return  self
+    //  */
+    // public function setTemplate(?string $template): self
+    // {
+    //     $this->template = $template;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setTemplateValue(): void
-    {
-        $this->template = $this->type . '-' . $this->nom . '-' . $this->categorie;
-    }
+    // /**
+    //  * @ORM\PrePersist()
+    //  */
+    // public function setTemplateValue(): void
+    // {
+    //     $this->template = $this->type . '-' . $this->nom . '-' . $this->categorie;
+    // }
 
-    public function __toString()
-    {
-        return $this->type . '-' . $this->nom . '-' . $this->categorie;
-    }
+    // public function __toString()
+    // {
+    //     return $this->type . '-' . $this->nom . '-' . $this->categorie;
+    // }
 }

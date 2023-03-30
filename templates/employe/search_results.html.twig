@@ -32,8 +32,7 @@
 				<a class="btn btn-primary mb-5" href="{{ path('index') }}">Retour à la recherche</a>
 				<div class="row">
 					{% for baseAutorisation in baseAutorisations %}
-						{% for diplome in baseAutorisation.Diplome %}
-
+						{% for diplome in baseAutorisation.diplome %}
 							<div class="col-auto mb-5 mt-5">
 								<div class="card" style="width: 18rem;">
 									<ul class="list-group list-group-flush">
@@ -53,8 +52,8 @@
 										<a class="btn btn-primary" href="{{ path('show', { id: baseAutorisation.id }) }}">Voir</a>
 									</div>
 								</div>
+							</div>
 							{% endfor %}
-						</div>
 					{% endfor %}
 				</div>
 			{% else %}

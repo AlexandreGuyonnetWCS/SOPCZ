@@ -1,5 +1,37 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
 
 {% block content %}
-
-{% endblock %}
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1 class="mt-3 text-center mb-2">Liste des Autorisations qui expirent dans les 6 mois</h1>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<h2 class="text-center text-danger">Attention</h2>
+			<ul class="list-group">
+				{% for base in bases %}
+							{% for employe in base.employe %}
+								{% for diplome in base.diplome %}
+									<li class="list-group-item">
+                                    <div class="row">
+										<p class="col-md-10">L'autorisation
+											{# {{ diplome.template }} #}
+											de
+											{{ employe.nom }}
+											{{ employe.prenom }}
+											va expirer le :
+											<span class="text-danger">{{ base.endedAt|date('d/m/Y') }}</span>.
+										</p>
+                                        
+                                        <a href="{{ path('admin', {'crudAction': 'edit', 'crudControllerFqcn': 'App\\Controller\\Admin\\BaseAutorisationCrudController', 'entityId': base.id}) }}" class="btn btn-primary col-md-2">Modifier</a>
+                                        </div>
+                                        
+									</li>
+								{% endfor %}
+					{% endfor %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>{% endblock %}

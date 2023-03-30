@@ -52,6 +52,20 @@ class BaseAutorisationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findBySixMonth($date)
+    {
+        $date = new \DateTime();
+        $date->modify('+6 month');
+
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.endedAt < :date')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
     //    /**
     //     * @return BaseAutorisation[] Returns an array of BaseAutorisation objects
     //     */

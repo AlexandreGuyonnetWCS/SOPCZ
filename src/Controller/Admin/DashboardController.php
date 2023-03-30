@@ -8,20 +8,29 @@ use App\Entity\Diplome;
 use App\Entity\Employe;
 use App\Entity\Entreprise;
 use App\Entity\BaseAutorisation;
-use Doctrine\ORM\Query\Expr\Base;
+use App\Repository\BaseAutorisationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
+    private BaseAutorisationRepository $baseAuto;
+
+    public function __construct(BaseAutorisationRepository $baseAuto)
+    {
+        $this->baseAuto = $baseAuto;
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-
+        $bases = $this->baseAuto->findBySixMonth('date');
         return $this->render('admin/dashboard.html.twig', [
+            'bases' => $bases
         ]);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -52,11 +61,18 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToUrl('Retour au site', 'fas fa-home', '/');
         yield MenuItem::section('Gestion des données');
+        yield MenuItem::linkToUrl('Home', 'fas fa-home', '/admin');
         yield MenuItem::linkToCrud('Entreprise', 'fas fa-industry', Entreprise::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Centres', 'fas fa-building', Centre::class);
         yield MenuItem::linkToCrud('Employés', 'fas fa-users', Employe::class);
         yield MenuItem::linkToCrud('Diplomes', 'fas fa-envelope', Diplome::class);
         yield MenuItem::linkToCrud('Base de données', 'fas fa-database', BaseAutorisation::class);
+    }
+
+    public function configureAssets(): Assets
+    {
+        return parent::configureAssets()
+            ->addWebpackEncoreEntry('admin');
     }
 }

@@ -59,6 +59,8 @@ Encore
     // enables Sass/SCSS support
     .enableSassLoader()
 
+    .addStyleEntry('admin', './assets/styles/admin.scss')
+
 // uncomment if you use TypeScript
 //.enableTypeScriptLoader()
 

@@ -35,14 +35,7 @@ class BaseAutorisationCrudController extends AbstractCrudController
                 ;
             }),
             AssociationField::new('diplome')
-            ->setCrudController(DiplomeCrudController::class)
-            ->formatValue(function ($value, $entity) {
-                return implode(",", $entity->getDiplome()->toArray());
-            })
-            ->setFormTypeOption('choice_label', function ($diplome) {
-                return $diplome->getType() . ' ' . $diplome->getNom() . ' ' . $diplome->getCategorie();
-            }),
-
+            ->setCrudController(DiplomeCrudController::class),
             AssociationField::new('centre')
             ->setCrudController(CentreCrudController::class)
             ->formatValue(function ($value, $entity) {
