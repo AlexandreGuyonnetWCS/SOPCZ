@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DiplomeFull;
 use App\Service\PdfService;
 use App\Form\EmployeSearchFormType;
 use App\Repository\DiplomeRepository;
@@ -9,6 +10,7 @@ use App\Repository\EmployeRepository;
 use App\Repository\EntrepriseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\BaseAutorisationRepository;
+use App\Repository\DiplomeFullRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +22,7 @@ class EmployeSearchController extends AbstractController
     public function search(
         Request $request,
         EmployeRepository $employeRepository,
-        BaseAutorisationRepository $baseRepository
+        BaseAutorisationRepository $baseRepository,
     ): Response {
         $form = $this->createForm(EmployeSearchFormType::class);
         $form->handleRequest($request);
@@ -83,7 +85,7 @@ class EmployeSearchController extends AbstractController
         $employe = $baseRepository->findOneBy(['id' => $id])->getEmploye()->getValues();
         $diplome = $baseRepository->findOneBy(['id' => $id])->getDiplome()->getValues();
         $entreprise = $entrepriseRepository->findAll();
-        $diplomeRepository->findOneBy(['id' => $diplome])->getTemplate();
+        $diplomeRepository->findOneBy(['id' => $diplome])->getDiplomeFull();
 
         return $this->render('card_templates/carte.html.twig', [
             'employe' => $employe,

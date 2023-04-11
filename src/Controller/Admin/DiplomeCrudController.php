@@ -10,8 +10,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class DiplomeCrudController extends AbstractCrudController
 {
@@ -23,7 +23,7 @@ class DiplomeCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-
+            AssociationField::new('diplomeFull', 'Diplôme'),
             TextField::new('description'),
             ChoiceField::new('validite')->setChoices([
                 '1' => '1 an',

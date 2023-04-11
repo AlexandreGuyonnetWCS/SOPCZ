@@ -6,14 +6,19 @@ use App\Entity\User;
 use App\Entity\Centre;
 use App\Entity\Diplome;
 use App\Entity\Employe;
+use App\Entity\DiplomeNom;
 use App\Entity\Entreprise;
+use App\Entity\DiplomeFull;
+use App\Entity\DiplomeType;
 use App\Entity\BaseAutorisation;
+use App\Entity\DiplomeCategorie;
 use App\Repository\BaseAutorisationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
@@ -66,6 +71,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Centres', 'fas fa-building', Centre::class);
         yield MenuItem::linkToCrud('Employés', 'fas fa-users', Employe::class);
+        yield MenuItem::linkToCrud('Catégories de Diplome', 'fas fa-envelope', DiplomeCategorie::class);
+        yield MenuItem::linkToCrud('Noms de Diplome', 'fas fa-envelope', DiplomeNom::class);
+        yield MenuItem::linkToCrud('Types de Diplome', 'fas fa-envelope', DiplomeType::class);
+        yield MenuItem::linkToCrud('Base Diplomes', 'fas fa-envelope', DiplomeFull::class);
         yield MenuItem::linkToCrud('Diplomes', 'fas fa-envelope', Diplome::class);
         yield MenuItem::linkToCrud('Base de données', 'fas fa-database', BaseAutorisation::class);
     }

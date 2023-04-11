@@ -7,9 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DiplomeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
-
-use function PHPUnit\Framework\returnSelf;
 
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
 
@@ -29,12 +26,11 @@ class Diplome
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    // #[ORM\Column(length: 255, nullable: true, unique: true)]
-    // #[Gedmo\Slug(fields: ["type", "nom" , "categorie"])]
-    // private ?string $template = null;
-
     #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'diplome')]
     private Collection $baseAutorisations;
+
+    #[ORM\OneToOne(inversedBy: 'diplome', cascade: ['persist', 'remove'])]
+    private ?DiplomeFull $diplomeFull = null;
 
     public function __construct()
     {
@@ -109,36 +105,20 @@ class Diplome
         return $this;
     }
 
-    /**
-     * Get the value of template
-     */
-    // public function getTemplate(): ?string
-    // {
-    //     return $this->template;
-    // }
+    public function getDiplomeFull(): ?DiplomeFull
+    {
+        return $this->diplomeFull;
+    }
 
-    // /**
-    //  * Set the value of template
-    //  *
-    //  * @return  self
-    //  */
-    // public function setTemplate(?string $template): self
-    // {
-    //     $this->template = $template;
+    public function setDiplomeFull(?DiplomeFull $diplomeFull): self
+    {
+        $this->diplomeFull = $diplomeFull;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // /**
-    //  * @ORM\PrePersist()
-    //  */
-    // public function setTemplateValue(): void
-    // {
-    //     $this->template = $this->type . '-' . $this->nom . '-' . $this->categorie;
-    // }
-
-    // public function __toString()
-    // {
-    //     return $this->type . '-' . $this->nom . '-' . $this->categorie;
-    // }
+    public function __toString()
+    {
+        return $this->diplomeFull;
+    }
 }
