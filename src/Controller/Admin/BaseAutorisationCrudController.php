@@ -2,9 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use DateTime;
 use App\Entity\BaseAutorisation;
 use App\Controller\Admin\CentreCrudController;
-use App\Controller\Admin\DiplomeCrudController;
 use App\Controller\Admin\EmployeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -12,7 +12,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class BaseAutorisationCrudController extends AbstractCrudController
 {
@@ -35,9 +34,13 @@ class BaseAutorisationCrudController extends AbstractCrudController
                 ;
             }),
             AssociationField::new('diplome')
-            ->setCrudController(DiplomeCrudController::class)
+            ->setLabel('Diplôme')
+            ->setCrudController(DiplomeFullCrudController::class)
             ->formatValue(function ($value, $entity) {
                 return implode(",", $entity->getDiplome()->toArray());
+            })
+            ->setFormTypeOption('choice_label', function ($diplome) {
+                return $diplome->getDiplomeType() . ' ' . $diplome->getDiplomeName() . ' ' . $diplome->getDiplomeCategory();
             }),
             AssociationField::new('centre')
             ->setCrudController(CentreCrudController::class)
@@ -51,9 +54,10 @@ class BaseAutorisationCrudController extends AbstractCrudController
             ->setFormat('dd/MM/yyyy')
             ->setHelp('Date de création de l\'autorisation')
             ->setLabel('Date de création'),
+
             DateField::new('endedAt')
             ->setFormat('dd/MM/yyyy')
-            ->setHelp('Date de fin de l\'autorisation')
+            ->setHelp('Ne rien remplir date automatique')
             ->setLabel('Date de fin'),
         ];
     }

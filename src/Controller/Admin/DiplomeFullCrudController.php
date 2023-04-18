@@ -4,9 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\DiplomeFull;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class DiplomeFullCrudController extends AbstractCrudController
 {
@@ -19,12 +21,24 @@ class DiplomeFullCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('type', 'Type')
-                ->setFormattedValue(fn ($value, $entity) => $entity->getDiplomeType()->getName()),
-            AssociationField::new('name', 'Nom')
-                ->setFormattedValue(fn ($value, $entity) => $entity->getDiplomeNom()->getName()),
-            AssociationField::new('categorie', 'Catégorie')
-                ->setFormattedValue(fn ($value, $entity) => $entity->getDiplomeCategorie()->getName()),
+            TextField::new('diplomeType')
+            ->setLabel('Type de diplôme'),
+            TextField::new('diplomeName')
+            ->setLabel('Nom du diplôme'),
+            TextField::new('diplomeCategory')
+            ->setLabel('Catégorie du diplôme'),
+            TextField::new('description'),
+            ChoiceField::new('validite')->setChoices([
+                1 => 1,
+                3 => 3,
+                5 => 3,
+                10 => 10,
+                ]),
+            ImageField::new('image')
+            ->setBasePath('uploads/images')
+            ->setUploadDir('public/uploads/images')
+            ->setUploadedFileNamePattern('[randomhash].[extension]')
+            ->setRequired(false),
         ];
     }
 

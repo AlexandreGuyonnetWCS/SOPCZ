@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use DateTime;
+use DateInterval;
 use App\Entity\BaseAutorisation;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<BaseAutorisation>
@@ -38,33 +40,44 @@ class BaseAutorisationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    public function findByNomEtPrenom(string $nom, string $prenom): array
+    public function getEmployeBaseInfo(string $nom, string $prenom): array
     {
-
-        return $this->createQueryBuilder('b')
+        $query = $this->createQueryBuilder('b')
+            ->select(
+                'e.genre',
+                'e.nom',
+                'e.prenom',
+                'e.amco',
+                'e.poste',
+                'e.departement',
+                'e.photo',
+                'd.diplomeType',
+                'd.diplomeName',
+                'd.diplomeCategory',
+                'd.validite',
+                'c.nom as centre',
+                'b.id',
+                'b.createdAt',
+                'b.endedAt',
+            )
             ->join('b.employe', 'e')
             ->andWhere('e.nom = :nom')
             ->andWhere('e.prenom = :prenom')
             ->setParameter('nom', $nom)
             ->setParameter('prenom', $prenom)
-            ->getQuery()
-            ->getResult();
+            ->join('b.diplome', 'd')
+            ->join('b.centre', 'c')
+            ->andWhere('d.diplomeType = :type')
+            ->andWhere('d.diplomeName = :name')
+            ->setParameter('type', 'CACES')
+            ->setParameter('name', 'R482')
+
+            ->getQuery();
+
+        $results = $query->getResult();
+
+        return $results;
     }
-
-    public function findBySixMonth($date)
-    {
-        $date = new \DateTime();
-        $date->modify('+6 month');
-
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.endedAt < :date')
-            ->setParameter('date', $date)
-            ->getQuery()
-            ->getResult();
-    }
-
-
 
     //    /**
     //     * @return BaseAutorisation[] Returns an array of BaseAutorisation objects

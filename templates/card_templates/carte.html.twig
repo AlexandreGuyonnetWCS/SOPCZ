@@ -174,11 +174,14 @@
 	</head>
 	<body>
 			{% for diplome in baseAutorisations.diplome %}
+			<pre>
+				{{ dump(diplome) }}
+			</pre>
 			
 				{% for entreprise in entreprise %}
 					{% for employe in employe %}
 						{% for centre in baseAutorisations.Centre %}
-							{% if diplome.diplomeFull.type.name == 'CACES' %}
+							{% if diplome.diplomeType == 'CACES' %}
 						<div class="card-container">
 							<div class="card-header">
 								<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
@@ -199,11 +202,11 @@
 									<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ diplome.image ) }} " alt=""/>
 								</div>
 								<div class="card-diplome-type">
-									{{ diplome.diplomeFull.type.name }}
+									{{ diplome.diplomeType }}
 								</div>
 								<div class="card-diplome-nom">
-									{{ diplome.diplomeFull.name.name }}
-									{{ diplome.diplomeFull.categorie.name }}
+									{{ diplome.diplomeName }}
+									{{ diplome.diplomeCategory }}
 								</div>
 							</div>
 						</div>
@@ -225,9 +228,9 @@
 								{{ employe.poste }}
 								<br><br>
 								m'a présenté le diplôme suivant :
-								{{ diplome.diplomeFull.type.name }}
-								{{ diplome.diplomeFull.name.name }}
-								{{ diplome.diplomeFull.categorie.name }}
+								{{ diplome.diplomeType }}
+								{{ diplome.diplomeName }}
+								{{ diplome.diplomeCategory }}
 								<br><br>
 								délivré par
 								{{ centre.nom }}
@@ -240,7 +243,7 @@
 								{{employe.prenom}}
 								<br>
 								A conduire les engins correspondant aux categories:
-								{{ diplome.diplomeFull.categorie.name }}
+								{{ diplome.diplomeCategory }}
 								<br>
 								<br>
 								Fait le :
@@ -279,11 +282,11 @@
 									<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ diplome.image ) }} " alt=""/>
 								
 								<div class="card-diplome-type">
-									{{ diplome.diplomeFull.type.name }}
+									{{ diplome.diplomeType }}
 								</div>
 								<div class="card-diplome-nom">
-									{{ diplome.diplomeFull.name.name }}
-									{{ diplome.diplomeFull.categorie.name }}
+									{{ diplome.diplomeName }}
+									{{ diplome.diplomeCategory }}
 								</div>
 							
 						</div>
@@ -305,9 +308,9 @@
 								{{ employe.poste }}
 								<br><br>
 								m'a présenté le diplôme suivant :
-								{{ diplome.diplomeFull.type.name }}
-								{{ diplome.diplomeFull.name.name }}
-								{{ diplome.diplomeFull.categorie.name }}
+								{{ diplome.diplomeType }}
+								{{ diplome.diplomeName }}
+								{{ diplome.diplomeCategory }}
 								<br><br>
 								délivré par
 								{{ centre.nom }}
@@ -320,7 +323,7 @@
 								{{employe.prenom}}
 								<br>
 								A conduire les engins correspondant aux categories:
-								{{ diplome.diplomeFull.categorie.name }}
+								{{ diplome.diplomeCategory }}
 								<br>
 								<br>
 								Fait le :

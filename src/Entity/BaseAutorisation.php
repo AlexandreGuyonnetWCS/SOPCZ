@@ -23,20 +23,21 @@ class BaseAutorisation
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $endedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Diplome::class, inversedBy: 'baseAutorisations')]
-    private Collection $diplome;
-
     #[ORM\ManyToMany(targetEntity: Centre::class, inversedBy: 'baseAutorisations')]
     private Collection $centre;
 
     #[ORM\ManyToMany(targetEntity: Employe::class, inversedBy: 'baseAutorisations')]
     private Collection $employe;
 
+    #[ORM\ManyToMany(targetEntity: DiplomeFull::class, inversedBy: 'baseAutorisations')]
+    private Collection $diplome;
+
+
     public function __construct()
     {
-        $this->diplome = new ArrayCollection();
         $this->centre = new ArrayCollection();
         $this->employe = new ArrayCollection();
+        $this->diplome = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,32 +64,13 @@ class BaseAutorisation
 
     public function setEndedAt(?\DateTimeImmutable $endedAt): self
     {
-        $this->endedAt = $endedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Diplome>
-     */
-    public function getDiplome(): Collection
-    {
-        return $this->diplome;
-    }
-
-    public function addDiplome(Diplome $diplome): self
-    {
-        if (!$this->diplome->contains($diplome)) {
-            $this->diplome->add($diplome);
+        if ($endedAt) {
+            $this->endedAt = $endedAt;
+        } else {
+            $this->endedAt = $endedAt;
+            $validite = $this->getDiplome()?->getValues()[0]?->getValidite() ?? 0;
+            $this->endedAt = $this->getCreatedAt()->modify('+' . $validite . ' year');
         }
-
-        return $this;
-    }
-
-    public function removeDiplome(Diplome $diplome): self
-    {
-        $this->diplome->removeElement($diplome);
-
         return $this;
     }
 
@@ -140,13 +122,28 @@ class BaseAutorisation
         return $this;
     }
 
-    public function getSixMonthsDates(): array
+
+    /**
+     * @return Collection<int, DiplomeFull>
+     */
+    public function getDiplome(): Collection
     {
-        $dates = array();
-        for ($i = 0; $i < 6; $i++) {
-            $date = date('Y-m-d', strtotime("+$i months"));
-            $dates[] = $date;
+        return $this->diplome;
+    }
+
+    public function addDiplome(DiplomeFull $diplome): self
+    {
+        if (!$this->diplome->contains($diplome)) {
+            $this->diplome->add($diplome);
         }
-        return $dates;
+
+        return $this;
+    }
+
+    public function removeDiplome(DiplomeFull $diplome): self
+    {
+        $this->diplome->removeElement($diplome);
+
+        return $this;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DiplomeFullRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DiplomeFullRepository::class)]
@@ -13,83 +15,138 @@ class DiplomeFull
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'diplomeFulls')]
-    private ?DiplomeType $type = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $validite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'diplomeFulls')]
-    private ?DiplomeNom $name = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'diplomeFulls')]
-    private ?DiplomeCategorie $categorie = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
-    #[ORM\OneToOne(mappedBy: 'diplomeFull', cascade: ['persist', 'remove'])]
-    private ?Diplome $diplome = null;
+    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'diplome')]
+    private Collection $baseAutorisations;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $diplomeType = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $diplomeName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $diplomeCategory = null;
+
+    public function __construct()
+    {
+        $this->baseAutorisations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?DiplomeType
+    public function getDiplomeType(): ?string
     {
-        return $this->type;
+        return $this->diplomeType;
     }
 
-    public function setType(?DiplomeType $type): self
+    public function setDiplomeType(?string $diplomeType): self
     {
-        $this->type = $type;
+        $this->diplomeType = $diplomeType;
 
         return $this;
     }
 
-    public function getName(): ?DiplomeNom
+    public function getDiplomeName(): ?string
     {
-        return $this->name;
+        return $this->diplomeName;
     }
 
-    public function setName(?DiplomeNom $name): self
+    public function setDiplomeName(?string $diplomeName): self
     {
-        $this->name = $name;
+        $this->diplomeName = $diplomeName;
 
         return $this;
     }
 
-    public function getCategorie(): ?DiplomeCategorie
+    public function getDiplomeCategory(): ?string
     {
-        return $this->categorie;
+        return $this->diplomeCategory;
     }
 
-    public function setCategorie(?DiplomeCategorie $categorie): self
+    public function setDiplomeCategory(string $diplomeCategory): self
     {
-        $this->categorie = $categorie;
+        $this->diplomeCategory = $diplomeCategory;
 
         return $this;
     }
 
-    public function getDiplome(): ?Diplome
+    public function getValidite(): ?int
     {
-        return $this->diplome;
+        return $this->validite;
     }
 
-    public function setDiplome(?Diplome $diplome): self
+    public function setValidite(?int $validite): self
     {
-        // unset the owning side of the relation if necessary
-        if ($diplome === null && $this->diplome !== null) {
-            $this->diplome->setDiplomeFull(null);
-        }
+        $this->validite = $validite;
 
-        // set the owning side of the relation if necessary
-        if ($diplome !== null && $diplome->getDiplomeFull() !== $this) {
-            $diplome->setDiplomeFull($this);
-        }
+        return $this;
+    }
 
-        $this->diplome = $diplome;
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
 
     public function __toString(): string
     {
-        return $this->getType() . ' ' . $this->name->getName() . ' ' . $this->categorie->getName();
+        return $this->getDiplomeType() . ' ' . $this->getDiplomeName() . ' ' . $this->getDiplomeCategory();
+    }
+
+    /**
+     * @return Collection<int, BaseAutorisation>
+     */
+    public function getBaseAutorisations(): Collection
+    {
+        return $this->baseAutorisations;
+    }
+
+    public function addBaseAutorisation(BaseAutorisation $baseAutorisation): self
+    {
+        if (!$this->baseAutorisations->contains($baseAutorisation)) {
+            $this->baseAutorisations->add($baseAutorisation);
+            $baseAutorisation->addDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBaseAutorisation(BaseAutorisation $baseAutorisation): self
+    {
+        if ($this->baseAutorisations->removeElement($baseAutorisation)) {
+            $baseAutorisation->removeDiplome($this);
+        }
+
+        return $this;
     }
 }

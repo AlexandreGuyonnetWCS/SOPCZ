@@ -10,13 +10,14 @@
 		<div class="row mt-5">
 			<h2 class="text-center text-danger">Attention</h2>
 			<ul class="list-group">
-				{% for base in bases %}
-							{% for employe in base.employe %}
+				{% set cutoff_date = "now"|date_modify('+6 months') %}
+				{% for base in bases|filter((base) => base.endedAt < cutoff_date) %}
+				{% for employe in base.employe %}
 								{% for diplome in base.diplome %}
 									<li class="list-group-item">
                                     <div class="row">
 										<p class="col-md-10">L'autorisation
-											{# {{ diplome.template }} #}
+											
 											de
 											{{ employe.nom }}
 											{{ employe.prenom }}
