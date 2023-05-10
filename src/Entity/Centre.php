@@ -36,9 +36,13 @@ class Centre
     #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'centre')]
     private Collection $baseAutorisations;
 
+    #[ORM\ManyToMany(targetEntity: NumeroHabilitation::class, mappedBy: 'centre')]
+    private Collection $numeroHabilitations;
+
     public function __construct()
     {
         $this->baseAutorisations = new ArrayCollection();
+        $this->numeroHabilitations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,5 +152,32 @@ class Centre
     public function __toString(): string
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, NumeroHabilitation>
+     */
+    public function getNumeroHabilitations(): Collection
+    {
+        return $this->numeroHabilitations;
+    }
+
+    public function addNumeroHabilitation(NumeroHabilitation $numeroHabilitation): self
+    {
+        if (!$this->numeroHabilitations->contains($numeroHabilitation)) {
+            $this->numeroHabilitations->add($numeroHabilitation);
+            $numeroHabilitation->addCentre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNumeroHabilitation(NumeroHabilitation $numeroHabilitation): self
+    {
+        if ($this->numeroHabilitations->removeElement($numeroHabilitation)) {
+            $numeroHabilitation->removeCentre($this);
+        }
+
+        return $this;
     }
 }

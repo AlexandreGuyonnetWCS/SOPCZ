@@ -8,6 +8,7 @@ use App\Entity\Employe;
 use App\Entity\Entreprise;
 use App\Entity\DiplomeFull;
 use App\Entity\BaseAutorisation;
+use App\Entity\NumeroHabilitation;
 use App\Repository\BaseAutorisationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,6 +69,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Centres', 'fas fa-building', Centre::class);
         yield MenuItem::linkToCrud('Employés', 'fas fa-users', Employe::class);
         yield MenuItem::linkToCrud('Base Diplomes', 'fas fa-envelope', DiplomeFull::class);
+        yield MenuItem::linkToCrud('Numero d\'habilitation', 'fas fa-tools', NumeroHabilitation::class);
         yield MenuItem::linkToCrud('Base de données', 'fas fa-database', BaseAutorisation::class);
     }
 

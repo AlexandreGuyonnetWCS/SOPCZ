@@ -62,17 +62,23 @@ class BaseAutorisation
         return $this->endedAt;
     }
 
-    public function setEndedAt(?\DateTimeImmutable $endedAt): self
+    public function setEndedAt(?\DateTimeImmutable $endedAt = null): self
     {
-        if ($endedAt) {
+        if ($endedAt !== null) {
             $this->endedAt = $endedAt;
         } else {
-            $this->endedAt = $endedAt;
-            $validite = $this->getDiplome()?->getValues()[0]?->getValidite() ?? 0;
-            $this->endedAt = $this->getCreatedAt()->modify('+' . $validite . ' year');
+            $diplome = $this->getDiplome();
+            if ($diplome !== null) {
+                $values = $diplome->getValues();
+                if (!empty($values[0])) {
+                    $validite = $values[0]->getValidite();
+                    $this->endedAt = $this->getCreatedAt()->modify('+' . $validite . ' year');
+                }
+            }
         }
         return $this;
     }
+
 
     /**
      * @return Collection<int, Centre>

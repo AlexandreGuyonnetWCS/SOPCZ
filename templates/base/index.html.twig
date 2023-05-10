@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center text-white">Autorisation de {{datas.genre }} {{ datas.nom }} {{ datas.prenom }}</h1>
+        </div>
+{% if datas %}
+					<div class="col-auto mb-5 mt-5">
+						<div class="card" style="width: 18rem;">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">{{ datas.type }}</li>
+								<li class="list-group-item">{{ datas.name }}</li>
+								</li>
+								<li class="list-group-item">{{ datas.categories }}</li>
+								<li class="list-group-item">validité : {{ datas.validite|date('d/m/Y') }}</li>
+								<li class="list-group-item">{{ datas.centre }}</li>
+								{% if datas.type is same as('Habilitation Electrique') %}
+								<li class="list-group-item">
+								numéro d'habilitation : {{ numero[0].number }}</li>
+								<li class="list-group-item">délivré par : {{ numero[0].centre }}</li>
+								{% endif %}
+								
+							</ul>
+							<div class="card-footer">
+								<a class="btn btn-primary" href="{{ path('carte_pdf', {'name': datas.name, 'type': datas.type, 'categories': datas.categories, 'validite': datas.validite, 'centre': datas.centre, 'nom': datas.nom, 'prenom': datas.prenom }) }}">Télécharger</a>
+								<a class="btn btn-primary" href="{{ path('show', {'name': datas.name, 'type': datas.type, 'categories': datas.categories, 'validite': datas.validite, 'centre': datas.centre, 'nom': datas.nom, 'prenom': datas.prenom }) }}">Voir</a>
+								<a class="btn btn-primary" href="javascript:history.go(-1)">Retour</a>
+							</div>
+						</div>
+					</div>
+				{% endif %} 
+{% endblock %}

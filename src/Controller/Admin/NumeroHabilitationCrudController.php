@@ -2,87 +2,53 @@
 
 namespace App\Controller\Admin;
 
-use DateTime;
-use App\Entity\BaseAutorisation;
+use App\Entity\NumeroHabilitation;
 use App\Controller\Admin\CentreCrudController;
 use App\Controller\Admin\EmployeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class BaseAutorisationCrudController extends AbstractCrudController
+class NumeroHabilitationCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return BaseAutorisation::class;
+        return NumeroHabilitation::class;
     }
+
 
     public function configureFields(string $pageName): iterable
     {
         return [
+            TextField::new('number')
+            ->setLabel('Numéro d\'habilitation'),
             AssociationField::new('employe')
             ->setLabel('Nom et prénom')
-            ->setCrudController(EmployeCrudController::class)
-            ->formatValue(function ($value, $entity) {
-                return implode(",", $entity->getEmploye()->toArray());
-            })
-            ->setFormTypeOption('choice_label', function ($employe) {
-                return $employe->getNom() . ' ' . $employe->getPrenom()
-                ;
-            }),
-            AssociationField::new('diplome')
-            ->setLabel('Diplôme')
-            ->setCrudController(DiplomeFullCrudController::class)
-            ->formatValue(function ($value, $entity) {
-                return implode(",", $entity->getDiplome()->toArray());
-            })
-            ->setFormTypeOption('choice_label', function ($diplome) {
-                return $diplome->getDiplomeType() .
-                ' ' . $diplome->getDiplomeName() .
-                ' ' . $diplome->getDiplomeCategory();
-            }),
+            ->setCrudController(EmployeCrudController::class),
             AssociationField::new('centre')
             ->setCrudController(CentreCrudController::class)
             ->formatValue(function ($value, $entity) {
                 return implode(",", $entity->getCentre()->toArray());
             })
-            ->setFormTypeOption('choice_label', function ($centre) {
-                return $centre->getNom();
-            }),
-            DateField::new('createdAt')
-            ->setFormat('dd/MM/yyyy')
-            ->setHelp('Date de création de l\'autorisation')
-            ->setLabel('Date de création'),
-
-            DateField::new('endedAt')
-            ->setFormat('dd/MM/yyyy')
-            ->setHelp('Ne rien remplir date automatique')
-            ->setLabel('Date de fin'),
         ];
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Autorisation')
-            ->setEntityLabelInPlural('Autorisations')
+            ->setEntityLabelInSingular('Numéro d\'habilitation')
+            ->setEntityLabelInPlural('Numéros d\'habilitation')
             ->setSearchFields(
                 [
-                    'id',
                     'employe.nom',
                     'employe.prenom',
-                    'diplome.nom',
-                    'diplome.type',
-                    'diplome.categorie',
                     'centre.nom',
-                    'createdAt',
-                    'endedAt'
                 ]
             )
-            ->setDefaultSort(['createdAt' => 'DESC'])
+            ->setDefaultSort(['employe.nom' => 'DESC'])
             ->setPaginatorPageSize(30)
             ->setPageTitle(Crud::PAGE_INDEX, 'Liste des %entity_label_plural%')
             ->setPageTitle(Crud::PAGE_DETAIL, 'Détail de l\'%entity_label_singular%')
