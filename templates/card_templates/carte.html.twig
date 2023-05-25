@@ -5,7 +5,8 @@
 		<title>Carte</title>
 		<style>
 			body {
-				... display: flex;
+				display: flex;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
 			}
@@ -17,7 +18,6 @@
 				position: relative;
 				margin-top: 2rem;
 				margin-bottom: 2rem;
-				margin-left: 10rem;
 			}
 			.card-container-full {
 				background: white;
@@ -27,7 +27,14 @@
 				position: relative;
 				margin-top: 2rem;
 				margin-bottom: 2rem;
-				margin-left: 10rem;
+			}
+			.container-2 {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 80%;
+				height: 33%;
 			}
 			.card-header {
 				font-size: 1rem;
@@ -56,8 +63,11 @@
 				height: 2rem;
 				top: 5px;
 				right: 5px;
-
-
+			}
+			.logo-2 {
+				height: 4rem;
+				top: 5px;
+				right: 5px;
 			}
 			.card-intitule {
 				position: relative;
@@ -182,6 +192,124 @@
 				border-radius: 5px;
 				border: 1px solid white;
 			}
+			.tg {
+				border-collapse: collapse;
+				border-spacing: 0;
+				width: 40rem;
+				height: 20rem;
+			}
+			.tg td {
+				border-color: black;
+				border-style: solid;
+				border-width: 1px;
+				font-family: Arial, sans-serif;
+				font-size: 11px;
+				overflow: hidden;
+				padding: 2px 2px;
+				word-break: normal;
+			}
+			.tg th {
+				border-color: black;
+				border-style: solid;
+				border-width: 1px;
+				font-family: Arial, sans-serif;
+				font-size: 11px;
+				font-weight: normal;
+				overflow: hidden;
+				padding: 2px 2px;
+				word-break: normal;
+			}
+			.tg .tg-9hzl {
+				background-color: #000000;
+				border-color: inherit;
+				color: #000000;
+				font-size: 12px;
+				font-weight: bold;
+				text-align: center;
+				vertical-align: top
+			}
+			.tg .tg-exhm {
+				border-color: inherit;
+				color: #000000;
+				font-family: Arial, sans-serif;
+				font-weight: bold;
+				font-size: 11px;
+				text-align: center;
+				vertical-align: center
+			}
+			.tg .tg-exh {
+				border-color: inherit;
+				color: #000000;
+				font-family: Arial, sans-serif;
+				font-weight: bold;
+				font-size: 11px;
+				text-align: top !important;
+				vertical-align: left !important;
+			}
+			.tg .tg-6ia5 {
+				background-color: #000000;
+				border-color: inherit;
+				color: #FFF;
+				font-weight: bold;
+				font-family: Arial, sans-serif;
+				font-size: 12px;
+				text-align: center;
+				vertical-align: top
+			}
+			.tg .tg-7fzc {
+				border-color: inherit;
+				color: #000000;
+				font-family: Arial, sans-serif;
+				font-weight: bold;
+				font-size: 11px;
+				text-align: left;
+				vertical-align: top
+			}
+			.tg .tg-73oq {
+				border-color: inherit;
+				text-align: left;
+				vertical-align: top;
+				font-family: Arial, sans-serif;
+				font-weight: bold;
+				font-size: 11px;
+			}
+			.tg-1 {
+				border-collapse: collapse;
+				border-spacing: 0;
+				border-color: black;
+				border-style: solid;
+				border-width: 1px;
+				width: 40rem;
+				height: 20rem;
+			}
+			.tg-1 td {
+				
+				font-family: Arial, sans-serif;
+				font-size: 11px;
+				overflow: hidden;
+				padding: 2px 2px;
+				padding-left: 10px;
+				word-break: normal;
+			}
+			.tg-1 th {
+				font-family: Arial, sans-serif;
+				font-size: 11px;
+				font-weight: normal;
+				overflow: hidden;
+				padding: 2px 2px;
+				word-break: normal;
+			}
+			.tg-5men {
+				font-family: Arial, Helvetica, sans-serif !important;
+				font-size: 11px;
+				vertical-align: top;
+			}
+			.tg-6men {
+				font-family: Arial, Helvetica, sans-serif !important;
+				font-size: 20px;
+				text-align: center;
+				vertical-align: center
+			}
 		</style>
 	</head>
 	<body>
@@ -254,7 +382,7 @@
 						Fait le :
 						{{ "now"|date('d/m/Y') }}
 						validité :
-						{{ baseAutorisations.validite }}
+						{{ baseAutorisations.validite|date('d/m/Y') }}
 						<br>
 					</div>
 					<div class="card-footer">
@@ -273,8 +401,175 @@
 					<button onclick="window.print()">Imprimer</button>
 				</div>
 			{% endfor %}
-		{% else %}
-			<h1>tutu</h1>
-		{% endif %}
-	</body>
+		</body>
+	{% else %}
+		<div class="container-2">
+			{% for entreprise in entreprise %}
+				<table class="tg-1">
+					<thead>
+						<tr>
+							<th class="tg-5men"><img class="logo-2" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/></th>
+							<th class="tg-6men" colspan="3"><strong>TITRE D'HABILITATION ELECTRIQUE</strong></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="tg-5men" colspan="4">Le titre d’habilitation formalise la reconnaissance, par l’employeur, de la capacité d’un salarié à travailler en sécurité sur des ouvrages électriques.<br>
+								Il est établi en tenant compte des éléments suivants :
+								<br>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-5men" colspan="4">
+								- La compétence du salarié (qualification pour les tâches à exécuter + formation théorique et pratique sur la prévention des risques électriques).<br>
+								- L’aptitude médicale (délivrée par le médecin de prévention).<br>
+								- Le comportement compatible avec la bonne exécution du travail (déterminé par la hiérarchie).
+								<br>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-5men" colspan="2"><strong>Avis d'habilitation n° :</strong>
+								{{ numero[0].number }}
+							</td>
+							<td class="tg-5men" colspan="2"><strong>Nom, Prénom:</strong>
+								{{ baseAutorisations.genre }}
+								{{ baseAutorisations.nom }}
+								{{ baseAutorisations.prenom }}</td>
+						</tr>
+						<tr>
+							<td class="tg-5men" colspan="2"><strong>Délivré par :</strong>
+								{{ numero[0].centre }}</td>
+							<td class="tg-5men" colspan="2"><strong>qui occupe le poste de :</strong>
+								{{ baseAutorisations.poste }}</td>
+						</tr>
+						<tr>
+							<td class="tg-5men" colspan="2"><strong>Date de de formation :</strong>
+								{{ baseAutorisations.creation|date('d/m/Y') }}</td>
+							<td class="tg-5men" colspan="2"><strong>Validité du titre :</strong>
+								{{ baseAutorisations.validite|format_datetime(pattern='dd MM yyyy', timezone='Europe/Paris') }}</td>
+						</tr>
+						<tr>
+							<td class="tg-5men" colspan="4"><strong>Aptitude médicale validée par l'AMCO en :</strong>
+								{{ baseAutorisations.amco|format_datetime(pattern='MM yyyy', timezone='Europe/Paris') }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+				<br>
+				<table class="tg">
+					<thead>
+						<tr>
+							<th class="tg-exhm" rowspan="2">PERSONNEL</th>
+							<th class="tg-exhm" rowspan="2">Symbole
+								<br>d'habilitation et attribut</th>
+							<th class="tg-exhm" colspan="3">Champ d'application</th>
+						</tr>
+						<tr>
+							<th class="tg-exhm">Domaine de tension ou tension concernées</th>
+							<th class="tg-exhm">Ouvrage ou installation concernées</th>
+							<th class="tg-exhm">Indications supplémentaires</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="tg-9hzl" colspan="5">
+								<span style="color:#FFF">TRAVAUX D'ORDRE NON ELECTRIQUE</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de chantier</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-6ia5" colspan="5">
+								<span style="color:#FFF">TRAVAUX D'ORDRE ELECTRIQUE</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de travaux</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé&nbspd'intervention&nbspBT</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de consignation</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Charge&nbspd'opérations&nbspspécifiques</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Habilité spécial</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-7fzc" colspan="5">Document supplémentaire ?
+								<input type="checkbox" id="oui" name="oui" checked>
+								<label for="oui">OUI</label>
+								<input type="checkbox" id="non" name="non">
+								<label for="non">NON</label>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-7fzc" colspan="2">Le titulaire :
+								{{ baseAutorisations.genre }}
+								{{ baseAutorisations.nom }}
+								{{ baseAutorisations.prenom }}
+								<br>SIGNATURE</td>
+							<td class="tg-7fzc" colspan="2">L'employeur :
+								{{ entreprise.nom }}
+								<br>
+								Nom et Prenom :
+								{{ entreprise.genreDirecteur }}
+								{{ entreprise.nomDirecteur }}
+								{{ entreprise.prenomDirecteur }}.
+								<br>Fonction : Directeur Général<img src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/></td>
+							<td class="tg-7fzc">Date de délivrance :
+								{{ baseAutorisations.creation|date('d/m/Y') }}<br>
+								Date d'expiration :
+								{{ baseAutorisations.validite|date('d/m/Y') }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		{% endfor %}
+
+	{% endif %}
+
 </html>

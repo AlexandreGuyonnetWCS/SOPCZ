@@ -14,9 +14,9 @@ class PdfService
         $this->domPdf = new Dompdf();
 
         $pdfOptions = new Options();
-
-        $pdfOptions->set('defaultFont', 'Garamond');
-        $pdfOptions->set('isRemoteEnabled', true);
+        $pdfOptions->setDefaultPaperSize('A4');
+        $pdfOptions->set('isHtml5ParserEnabled', true);
+        $pdfOptions->setChroot(__DIR__ . '/../../public');
         $this->domPdf->setOptions($pdfOptions);
     }
 
@@ -31,6 +31,8 @@ class PdfService
     {
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
-        $this->domPdf->output();
+        $this->domPdf->stream("carte.pdf", [
+            'Attachment' => true,
+        ]);
     }
 }

@@ -61,6 +61,7 @@ class EmployeSearchController extends AbstractController
         $name = $_GET['name'];
         $datas = $this->baseRepository->getDiplomeByTypeName($type, $name, $nom, $prenom);
         $entreprise = $this->entrepriseRepository->findAll();
+        $numero = $this->numeroHabilitationRepository->getNumberHabilitation($nom, $prenom);
 
 
         $html = $this->renderView('card_templates/carte.html.twig', [
@@ -70,9 +71,10 @@ class EmployeSearchController extends AbstractController
             'prenom' => $prenom,
             'entreprise' => $entreprise,
             'baseAutorisations' => $datas,
+            'numero' => $numero,
         ]);
 
-        $pdfService->showPdfFile($html);
+        $pdfService->generateBinaryPDF($html);
 
         return new Response();
     }
@@ -86,6 +88,7 @@ class EmployeSearchController extends AbstractController
         $name = $_GET['name'];
         $baseAutorisations = $this->baseRepository->getDiplomeByTypeName($type, $name, $nom, $prenom);
         $entreprise = $this->entrepriseRepository->findAll();
+        $numero = $this->numeroHabilitationRepository->getNumberHabilitation($nom, $prenom);
 
 
         return $this->render('card_templates/carte.html.twig', [
@@ -95,6 +98,7 @@ class EmployeSearchController extends AbstractController
             'name' => $name,
             'nom' => $nom,
             'prenom' => $prenom,
+            'numero' => $numero,
         ]);
     }
 }

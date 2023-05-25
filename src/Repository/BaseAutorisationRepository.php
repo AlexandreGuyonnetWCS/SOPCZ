@@ -133,6 +133,7 @@ class BaseAutorisationRepository extends ServiceEntityRepository
         foreach ($query as $key => $value) {
             $validite[] = $value['endedAt'];
         }
+        $creation = $query[0]['createdAt'];
 
         $older_validite = $this->createQueryBuilder('b')
             ->select('MIN(b.endedAt)')
@@ -173,6 +174,7 @@ class BaseAutorisationRepository extends ServiceEntityRepository
             'departement' => $departement,
             'amco' => $amco,
             'image' => $image,
+            'creation' => $creation,
 
         ];
 
