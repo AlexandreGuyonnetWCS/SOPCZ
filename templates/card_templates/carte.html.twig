@@ -313,7 +313,7 @@
 		</style>
 	</head>
 	<body>
-		{% if baseAutorisations.type == 'CACES' %}
+		{% if baseAutorisations.type == 'CACES' or 'Travaux en Hauteur' %}
 			{% for entreprise in entreprise %}
 				<div class="card-container">
 					<div class="card-header">
@@ -323,7 +323,11 @@
 						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
 					</div>
 					<div class="card-body">
+					{% if baseAutorisations.type == 'CACES'%}
 						<div class="card-intitule">AUTORISATION DE CONDUITE</div>
+					{% else %}
+						<div class="card-intitule">AUTORISATION DE TRAVAIL EN <br>HAUTEUR</div>
+					{% endif %}
 						<div class="card-nom">
 							{{ baseAutorisations.genre }}
 							{{ baseAutorisations.nom }}
@@ -403,6 +407,9 @@
 			{% endfor %}
 		</body>
 	{% else %}
+	<pre>
+		{{ dump(baseAutorisations) }}
+	</pre>
 		<div class="container-2">
 			{% for entreprise in entreprise %}
 				<table class="tg-1">
@@ -446,11 +453,11 @@
 							<td class="tg-5men" colspan="2"><strong>Date de de formation :</strong>
 								{{ baseAutorisations.creation|date('d/m/Y') }}</td>
 							<td class="tg-5men" colspan="2"><strong>Validité du titre :</strong>
-								{{ baseAutorisations.validite|format_datetime(pattern='dd MM yyyy', timezone='Europe/Paris') }}</td>
+								{{ baseAutorisations.validite|format_datetime(pattern='dd/MM/yyyy', timezone='Europe/Paris') }}</td>
 						</tr>
 						<tr>
 							<td class="tg-5men" colspan="4"><strong>Aptitude médicale validée par l'AMCO en :</strong>
-								{{ baseAutorisations.amco|format_datetime(pattern='MM yyyy', timezone='Europe/Paris') }}</td>
+								{{ baseAutorisations.amco|format_datetime(pattern='MM/yyyy', timezone='Europe/Paris') }}</td>
 						</tr>
 					</tbody>
 				</table>

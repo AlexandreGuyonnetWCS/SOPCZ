@@ -15,7 +15,7 @@ class EmployeFixtures extends Fixture
 
         $employes = [];
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             $employe = new Employe();
             $employe->setGenre($faker->randomElement(['Monsieur', 'Madame', 'Mademoiselle']));
             $employe->setNom($faker->lastName());
@@ -23,7 +23,7 @@ class EmployeFixtures extends Fixture
             $employe->setDepartement($faker->randomElement(['1', '2', '3', '4', '5']));
             $employe->setPoste($faker->randomElement(['Fontainier', 'Chauffagiste', 'Plombier', 'Electricien']));
             $employe->setAmco($faker->dateTimeBetween('-10 years', 'now'));
-            $employe->setPhoto('https://picsum.photos/800/600?random=' . $i);
+            $employe->setPhoto($faker->imageUrl(640, 480, 'person', true, 'Faker', true));
             $employes[] = $employe;
             $manager->persist($employe);
         }

@@ -16,7 +16,8 @@ class PdfService
         $pdfOptions = new Options();
         $pdfOptions->setDefaultPaperSize('A4');
         $pdfOptions->set('isHtml5ParserEnabled', true);
-        $pdfOptions->setChroot(__DIR__ . '/../../public');
+        $pdfOptions->setDpi(300);
+        
         $this->domPdf->setOptions($pdfOptions);
     }
 

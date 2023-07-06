@@ -31,7 +31,7 @@ class DiplomeFullCrudController extends AbstractCrudController
             ChoiceField::new('validite')->setChoices([
                 1 => 1,
                 3 => 3,
-                5 => 3,
+                5 => 5,
                 10 => 10,
                 ]),
             ImageField::new('image')

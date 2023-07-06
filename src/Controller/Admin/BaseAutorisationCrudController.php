@@ -9,6 +9,7 @@ use App\Controller\Admin\EmployeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -64,25 +65,21 @@ class BaseAutorisationCrudController extends AbstractCrudController
         ];
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('employe')
+            ->add('diplome')
+            ->add('centre')
+            ->add('createdAt')
+            ->add('endedAt');
+    }
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
             ->setEntityLabelInSingular('Autorisation')
             ->setEntityLabelInPlural('Autorisations')
-            ->setSearchFields(
-                [
-                    'id',
-                    'employe.nom',
-                    'employe.prenom',
-                    'diplome.nom',
-                    'diplome.type',
-                    'diplome.categorie',
-                    'centre.nom',
-                    'createdAt',
-                    'endedAt'
-                ]
-            )
-            ->setDefaultSort(['createdAt' => 'DESC'])
             ->setPaginatorPageSize(30)
             ->setPageTitle(Crud::PAGE_INDEX, 'Liste des %entity_label_plural%')
             ->setPageTitle(Crud::PAGE_DETAIL, 'Détail de l\'%entity_label_singular%')
