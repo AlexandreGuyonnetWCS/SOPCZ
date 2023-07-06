@@ -313,7 +313,7 @@
 		</style>
 	</head>
 	<body>
-		{% if baseAutorisations.type == 'CACES' or 'Travaux en Hauteur' %}
+		{% if baseAutorisations.type == 'CACES' %}
 			{% for entreprise in entreprise %}
 				<div class="card-container">
 					<div class="card-header">
@@ -323,11 +323,8 @@
 						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
 					</div>
 					<div class="card-body">
-					{% if baseAutorisations.type == 'CACES'%}
+					
 						<div class="card-intitule">AUTORISATION DE CONDUITE</div>
-					{% else %}
-						<div class="card-intitule">AUTORISATION DE TRAVAIL EN <br>HAUTEUR</div>
-					{% endif %}
 						<div class="card-nom">
 							{{ baseAutorisations.genre }}
 							{{ baseAutorisations.nom }}
@@ -576,7 +573,6 @@
 				</table>
 			</div>
 		{% endfor %}
-
 	{% endif %}
 
 </html>
