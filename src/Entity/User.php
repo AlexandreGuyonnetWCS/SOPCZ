@@ -6,10 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
-use function PHPSTORM_META\type;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cette adresse email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,21 +21,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
+
     #[ORM\Column(type:"json")]
-    private  $roles = [
+    private array $roles = [
     ];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(min: 8, minMessage: "Le mot de passe doit contenir au moins 8 caractères")]
+    #[Assert\Regex(
+        pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*., ?]).+$/",
+        message: "Le mot de passe doit contenir au moins une majuscule,
+        une minuscule, un chiffre et un caractère spécial"
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(min: 2, minMessage: "Le nom doit contenir au moins 2 caractères")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z]+$/", message: "Le nom '{{ value }}' n'est pas valide.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(min: 2, minMessage: "Le prénom doit contenir au moins 2 caractères")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z]+$/", message: "Le prénom '{{ value }}' n'est pas valide.")]
     private ?string $prenom = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $emailToken;
 
     public function getId(): ?int
     {
@@ -98,7 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -124,6 +142,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function generateEmailVerificationToken(): void
+    {
+        $this->emailToken = bin2hex(random_bytes(32));
+    }
+
+    /**
+     * Get the value of emailVerificationToken
+     */
+    public function getEmailVerificationToken(): ?string
+    {
+        return $this->emailToken;
+    }
+
+    /**
+     * Set the value of emailVerificationToken
+     *
+     * @return  self
+     */
+    public function setEmailVerificationToken(?string $emailToken): self
+    {
+        $this->emailToken = $emailToken;
 
         return $this;
     }

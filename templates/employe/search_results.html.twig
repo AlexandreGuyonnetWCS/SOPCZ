@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1 class="text-center text-white mt-2 mb-4">Résultats de la recherche</h1>
+	<div class="container">
+		<div class="row g-0 mb-3">
+			<div class="col-md-10 col-12 ">
+				{% if datas|length %}
+					{% for i in datas |slice(start=0, length=1) %}
+						<div class="card mb-2">
+							<div class="card-header">
+								<h3 class="card-title text-center">Fiche Collaborateur</h3>
+							</div>
+							<div class="row g-0 mb-3">
+								<div class="col-md-2">
+									<div class="card-image-top"><img src="{{ asset('uploads/employes/' ~ datas[0].photo) }}" alt="photo" class="img-fluid"></div>
+								</div>
+								<div class="col-md-10">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">{{ datas[0].genre }}
+											{{ datas[0].nom }}
+											{{ datas[0].prenom }}</li>
+										<li class="list-group-item">Département :
+											{{ datas[0].departement}}</li>
+										<li class="list-group-item">Poste :
+											{{ datas[0].poste}}</li>
+										<li class="list-group-item">Date de visite médicale :
+											{{ datas[0].amco|date('d/m/Y')}}</li>
+										<li class="list-group-item">Numéro d'habilitation :
+											{% if numero|length  %}
+												{{ numero[0].number }}
+											{% else %}
+												pas de numéro d'habilitation
+											{% endif %}
+										</li>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 col-12 my-auto">
+							<a class="btn btn-primary m-3" href="{{ path('index') }}">Retour à la recherche</a>
+						</div>
+					</div>
+				{% endfor %}
+				<div class="row g-0">
+					<div class="card mb-2">
+						<div class="card-header">
+							<h3 class="card-title text-center">Liste des autorisations</h3>
+						</div>
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th scope="col">Autorisation</th>
+										<th scope="col">Date de création</th>
+										<th scope="col">Date de fin</th>
+										<th scope="col">Centre</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for data in datas %}
+										<tr>
+											<td>{{ data.diplomeType }}
+												{{ data.diplomeName }}
+												{{ data.diplomeCategory }}</td>
+											<td>{{ data.createdAt|date('d/m/Y') }}</td>
+											<td>{{ data.endedAt|date('d/m/Y') }}</td>
+											<td>{{ data.centre }}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				{{ render(controller('App\\Controller\\BaseController::search')) }}
+
+			</div>
+		{% else %}
+		{% if employe|length %}		
+			<div class="card mb-2">
+				<div class="card-header">
+					<h3 class="card-title text-center">Fiche Collaborateur</h3>
+				</div>
+				<div class="row g-0 mb-3">
+					<div class="col-md-2">
+						<div class="card-image-top"><img src="{{ asset('uploads/employes/' ~ employe.photo) }}" alt="photo" class="img-fluid"></div>
+					</div>
+					<div class="col-md-10">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">{{ employe.genre }}
+								{{ employe.nom }}
+								{{ employe.prenom }}</li>
+							<li class="list-group-item">Département :
+								{{ employe.departement}}</li>
+							<li class="list-group-item">Poste :
+								{{ employe.poste}}</li>
+							<li class="list-group-item">Date de visite médicale :
+								{{ employe.amco|date('d/m/Y')}}</li>
+							<li class="list-group-item">Numéro d'habilitation :
+								{% if employe.numeroHabilitation|length  %}
+									{{ employe.numeroHabilitation }}
+								{% else %}
+									pas de numéro d'habilitation
+								{% endif %}
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-2 col-12 my-auto">
+				<a class="btn btn-primary m-3" href="{{ path('index') }}">Retour à la recherche</a>
+			</div>
+			</div>
+			<div class="text-center">
+				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'a aucune autorisation</p>
+			</div>
+			
+		{% else %}
+			<div class="text-center">
+				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'existe pas</p>
+				<a class="btn btn-primary mt-5" href="{{ path('index') }}">Retour à la recherche</a>
+			</div>
+		{% endif %}
+	{% endif %}
+	</div>
+{% endblock %}

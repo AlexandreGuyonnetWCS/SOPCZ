@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\BaseAutorisationRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: BaseAutorisationRepository::class)]
 class BaseAutorisation
@@ -16,25 +18,26 @@ class BaseAutorisation
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $CreatedAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $EndedAt = null;
-
-    #[ORM\ManyToMany(targetEntity: Diplome::class, inversedBy: 'baseAutorisations')]
-    private Collection $Diplome;
+    private ?\DateTimeImmutable $endedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Centre::class, inversedBy: 'baseAutorisations')]
-    private Collection $Centre;
+    private Collection $centre;
 
     #[ORM\ManyToMany(targetEntity: Employe::class, inversedBy: 'baseAutorisations')]
-    private Collection $Employe;
+    private Collection $employe;
+
+    #[ORM\ManyToMany(targetEntity: DiplomeFull::class, inversedBy: 'baseAutorisations')]
+    private Collection $diplome;
+
 
     public function __construct()
     {
-        $this->Diplome = new ArrayCollection();
-        $this->Centre = new ArrayCollection();
-        $this->Employe = new ArrayCollection();
+        $this->centre = new ArrayCollection();
+        $this->employe = new ArrayCollection();
+        $this->diplome = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,64 +47,51 @@ class BaseAutorisation
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->CreatedAt;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $CreatedAt): self
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
     {
-        $this->CreatedAt = $CreatedAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getEndedAt(): ?\DateTimeImmutable
     {
-        return $this->EndedAt;
+        return $this->endedAt;
     }
 
-    public function setEndedAt(?\DateTimeImmutable $EndedAt): self
+    public function setEndedAt(?\DateTimeImmutable $endedAt = null): self
     {
-        $this->EndedAt = $EndedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Diplome>
-     */
-    public function getDiplome(): Collection
-    {
-        return $this->Diplome;
-    }
-
-    public function addDiplome(Diplome $diplome): self
-    {
-        if (!$this->Diplome->contains($diplome)) {
-            $this->Diplome->add($diplome);
+        if ($endedAt !== null) {
+            $this->endedAt = $endedAt;
+        } else {
+            $diplome = $this->getDiplome();
+            if ($diplome !== null) {
+                $values = $diplome->getValues();
+                if (!empty($values[0])) {
+                    $validite = $values[0]->getValidite();
+                    $this->endedAt = $this->getCreatedAt()->modify('+' . $validite . ' year');
+                }
+            }
         }
-
         return $this;
     }
 
-    public function removeDiplome(Diplome $diplome): self
-    {
-        $this->Diplome->removeElement($diplome);
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Centre>
      */
     public function getCentre(): Collection
     {
-        return $this->Centre;
+        return $this->centre;
     }
 
     public function addCentre(Centre $centre): self
     {
-        if (!$this->Centre->contains($centre)) {
-            $this->Centre->add($centre);
+        if (!$this->centre->contains($centre)) {
+            $this->centre->add($centre);
         }
 
         return $this;
@@ -109,7 +99,7 @@ class BaseAutorisation
 
     public function removeCentre(Centre $centre): self
     {
-        $this->Centre->removeElement($centre);
+        $this->centre->removeElement($centre);
 
         return $this;
     }
@@ -119,13 +109,13 @@ class BaseAutorisation
      */
     public function getEmploye(): Collection
     {
-        return $this->Employe;
+        return $this->employe;
     }
 
     public function addEmploye(Employe $employe): self
     {
-        if (!$this->Employe->contains($employe)) {
-            $this->Employe->add($employe);
+        if (!$this->employe->contains($employe)) {
+            $this->employe->add($employe);
         }
 
         return $this;
@@ -133,10 +123,33 @@ class BaseAutorisation
 
     public function removeEmploye(Employe $employe): self
     {
-        $this->Employe->removeElement($employe);
+        $this->employe->removeElement($employe);
 
         return $this;
     }
 
 
+    /**
+     * @return Collection<int, DiplomeFull>
+     */
+    public function getDiplome(): Collection
+    {
+        return $this->diplome;
+    }
+
+    public function addDiplome(DiplomeFull $diplome): self
+    {
+        if (!$this->diplome->contains($diplome)) {
+            $this->diplome->add($diplome);
+        }
+
+        return $this;
+    }
+
+    public function removeDiplome(DiplomeFull $diplome): self
+    {
+        $this->diplome->removeElement($diplome);
+
+        return $this;
+    }
 }

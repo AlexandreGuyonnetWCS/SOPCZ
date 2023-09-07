@@ -47,7 +47,7 @@ class EntrepriseCrudController extends AbstractCrudController
             ->setLabel('Signature du directeur'),
             TextField::new('Contacte')
             ->setLabel('Numero de téléphone'),
-            
+
         ];
     }
 

@@ -28,7 +28,7 @@ class Employe
     private ?string $poste = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $amco = null;
+    private ?\DateTime $amco = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
@@ -36,8 +36,11 @@ class Employe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'Employe')]
+    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'employe')]
     private Collection $baseAutorisations;
+
+    #[ORM\OneToOne(mappedBy: 'employe', cascade: ['persist', 'remove'])]
+    private ?NumeroHabilitation $numeroHabilitation = null;
 
     public function __construct()
     {
@@ -97,12 +100,12 @@ class Employe
         return $this;
     }
 
-    public function getAmco(): ?\DateTimeImmutable
+    public function getAmco(): ?\DateTime
     {
         return $this->amco;
     }
 
-    public function setAmco(?\DateTimeImmutable $amco): self
+    public function setAmco(?\DateTime $amco): self
     {
         $this->amco = $amco;
 
@@ -156,6 +159,29 @@ class Employe
         if ($this->baseAutorisations->removeElement($baseAutorisation)) {
             $baseAutorisation->removeEmploye($this);
         }
+
+        return $this;
+    }
+
+
+    public function getNumeroHabilitation(): ?NumeroHabilitation
+    {
+        return $this->numeroHabilitation;
+    }
+
+    public function setNumeroHabilitation(?NumeroHabilitation $numeroHabilitation): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($numeroHabilitation === null && $this->numeroHabilitation !== null) {
+            $this->numeroHabilitation->setEmploye(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($numeroHabilitation !== null && $numeroHabilitation->getEmploye() !== $this) {
+            $numeroHabilitation->setEmploye($this);
+        }
+
+        $this->numeroHabilitation = $numeroHabilitation;
 
         return $this;
     }

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}SOPCZ
 			{% endblock %}
 		</title>
 		<link
@@ -15,10 +15,21 @@
 
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 		{% endblock %}
 	</head>
 	<body>
-		{% block body %}
-		{% endblock %}
+		{% include "includes/navbar/index.html.twig" %}
+
 	</body>
+	{% block body %}{% endblock %}
+<script>
+		const alerts = document.querySelectorAll('[class*="alert-"]')
+for (const alert of alerts) {
+setTimeout(function () {
+const bootstrapAlert = bootstrap.Alert.getOrCreateInstance(alert);
+bootstrapAlert.close();
+}, 5000);
+}
+</script>
 </html>
