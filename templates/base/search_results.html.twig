@@ -4,14 +4,46 @@
 			<div class="col-md-12">
 				<h1 class="text-white text-center">Page de recherche des autorisations</h1>
 				<form action="{{ path('base_search') }}" method="post">
-					{{ form_start(form) }}
 					<input type="hidden" name="nom" value="{{ nom }}">
 					<input type="hidden" name="prenom" value="{{ prenom }}">
-					{{ form_widget(form) }}
-
-					<input class="btn btn-primary" type="submit" value="Rechercher"/>
+					{{ form_start(form) }}
+					<div class="form-group">
+						{{ form_label(form.diplomeType, "Type de diplome", {'label_attr': {'class': 'text-white'}}) }}
+						{{ form_widget(form.diplomeType, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(form.diplomeName, "Nom du diplome", {'label_attr': {'class': 'text-white'}}) }}
+						{{ form_widget(form.diplomeName, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					<input class="btn btn-primary mt-2" type="submit" value="Rechercher"/>
 					{{ form_end(form) }}
 				</form>
 			</div>
 		</div>
-{% endblock %}
+	{% endblock %}
+
+	{% block javascripts %}
+		
+	{% endblock %}
+<script>
+			window.onload = function () {
+				let datas = {{ datas|json_encode|raw }};
+				let diplomeType = document.querySelector('#diplomes_diplomeType');
+
+				diplomeType.addEventListener('change', function () {
+					let diplomeTypeValue = diplomeType.value;
+					let diplomeName = datas.filter(function (data) {
+						return data.diplomeType === diplomeTypeValue
+					});
+					let diplomeNameSelect = document.querySelector('#diplomes_diplomeName');
+					diplomeNameSelect.innerHTML = '';
+					diplomeName.forEach(function (data) {
+						let option = document.createElement('option');
+						option.value = data.diplomeName;
+						option.textContent = data.diplomeName;
+						diplomeNameSelect.appendChild(option);
+					})
+				}
+				)
+			}
+		</script>

@@ -7,6 +7,7 @@ use App\Form\EmployeSearchFormType;
 use App\Repository\EntrepriseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\BaseAutorisationRepository;
+use App\Repository\EmployeRepository;
 use App\Repository\NumeroHabilitationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,15 +18,18 @@ class EmployeSearchController extends AbstractController
     private BaseAutorisationRepository $baseRepository;
     private EntrepriseRepository $entrepriseRepository;
     private NumeroHabilitationRepository $numeroHabilitationRepository;
+    private EmployeRepository $employeRepository;
 
     public function __construct(
         BaseAutorisationRepository $baseRepository,
         EntrepriseRepository $entrepriseRepository,
-        NumeroHabilitationRepository $numeroHabilitationRepository
+        NumeroHabilitationRepository $numeroHabilitationRepository,
+        EmployeRepository $employeRepository
     ) {
         $this->baseRepository = $baseRepository;
         $this->entrepriseRepository = $entrepriseRepository;
         $this->numeroHabilitationRepository = $numeroHabilitationRepository;
+        $this->employeRepository = $employeRepository;
     }
     #[Route('/carte', name: 'index')]
     public function search(Request $request): Response
@@ -39,11 +43,13 @@ class EmployeSearchController extends AbstractController
             $employePrenom = $searchData->getPrenom();
             $datas = $this->baseRepository->getEmployeBaseInfo($employeNom, $employePrenom);
             $numero = $this->numeroHabilitationRepository->getNumberHabilitation($employeNom, $employePrenom);
+            $employe = $this->employeRepository->findOneBy(['nom' => $employeNom, 'prenom' => $employePrenom]);
 
             return $this->render('employe/search_results.html.twig', [
                 'datas' => $datas,
                 'numero' => $numero,
                 'form' => $form->createView(),
+                'employe' => $employe,
             ]);
         }
         return $this->render('card_generator/index.html.twig', [

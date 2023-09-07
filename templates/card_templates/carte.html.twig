@@ -403,7 +403,175 @@
 				</div>
 			{% endfor %}
 		</body>
-	{% else %}
+	{% elseif baseAutorisations.type == 'Travaux en hauteur' and baseAutorisations.name == 'Echafaudage' %}
+	{% for entreprise in entreprise %}
+				<div class="card-container">
+					<div class="card-header">
+						<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
+					</div>
+					<div class="card-photo">
+						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
+					</div>
+					<div class="card-body">
+					
+						<div class="card-intitule">AUTORISATION ECHAFAUDAGE</div>
+						<div class="card-nom">
+							{{ baseAutorisations.genre }}
+							{{ baseAutorisations.nom }}
+							{{ baseAutorisations.prenom }}
+						</div>
+					</div>
+					<div class="card-footer">
+						<div>
+							<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ baseAutorisations.image ) }} " alt=""/>
+						</div>
+						<div class="card-diplome-type">
+						</div>
+						<div class="card-diplome-nom">
+							{{ baseAutorisations.name }}
+						</div>
+					</div>
+				</div>
+				<div class="card-container">
+					<div class="card-body-2">
+						Je soussigné,
+						{{ entreprise.genreDirecteur }}
+						{{ entreprise.nomDirecteur }}
+						{{ entreprise.prenomDirecteur }}
+						, Directeur Général ,
+						<br>
+						<br>
+						certifie que
+						{{ baseAutorisations.genre}}
+						{{ baseAutorisations.nom}}
+						{{baseAutorisations.prenom}}
+						<br>
+						qui occupe le poste de
+						{{ baseAutorisations.poste }}
+						<br><br>
+						m'a présenté le diplôme suivant :
+						{{ baseAutorisations.name }}
+						<br><br>
+						délivré par
+						{{ baseAutorisations.centre }}
+						Aptitude médicale validée par l'AMCO en :
+						{{ baseAutorisations.amco|date('m/Y') }}
+						<br><br>
+						En foi de quoi j'autorise :
+						{{ baseAutorisations.genre}}
+						{{ baseAutorisations.nom}}
+						{{baseAutorisations.prenom}}
+						<br>
+						A effectuer le montage, le démontage et la vérification des échafaudages.
+						<br>
+						<br>
+						Fait le :
+						{{ "now"|date('d/m/Y') }}
+						validité :
+						{{ baseAutorisations.validite|date('d/m/Y') }}
+						<br>
+					</div>
+					<div class="card-footer">
+						<div class="card-dg">
+							{{ entreprise.genreDirecteur }}
+							{{ entreprise.nomDirecteur }}
+							{{ entreprise.prenomDirecteur }}
+							<br>Directeur Général
+						</div>
+						<div>
+							<img class="card-signature" src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/>
+						</div>
+					</div>
+				</div>
+				<div>
+					<button onclick="window.print()">Imprimer</button>
+				</div>
+			{% endfor %}
+	{% elseif baseAutorisations.type == 'Travaux en hauteur' %}
+	{% for entreprise in entreprise %}
+				<div class="card-container">
+					<div class="card-header">
+						<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
+					</div>
+					<div class="card-photo">
+						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
+					</div>
+					<div class="card-body">
+					
+						<div class="card-intitule">AUTORISATION TRAVAUX EN <br> HAUTEUR</div>
+						<div class="card-nom">
+							{{ baseAutorisations.genre }}
+							{{ baseAutorisations.nom }}
+							{{ baseAutorisations.prenom }}
+						</div>
+					</div>
+					<div class="card-footer">
+						<div>
+							<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ baseAutorisations.image ) }} " alt=""/>
+						</div>
+						<div class="card-diplome-type">
+						</div>
+						<div class="card-diplome-nom">
+							{{ baseAutorisations.name }}
+						</div>
+					</div>
+				</div>
+				<div class="card-container">
+					<div class="card-body-2">
+						Je soussigné,
+						{{ entreprise.genreDirecteur }}
+						{{ entreprise.nomDirecteur }}
+						{{ entreprise.prenomDirecteur }}
+						, Directeur Général ,
+						<br>
+						<br>
+						certifie que
+						{{ baseAutorisations.genre}}
+						{{ baseAutorisations.nom}}
+						{{baseAutorisations.prenom}}
+						<br>
+						qui occupe le poste de
+						{{ baseAutorisations.poste }}
+						<br><br>
+						m'a présenté le diplôme suivant :
+						{{ baseAutorisations.type }}
+						<br><br>
+						délivré par
+						{{ baseAutorisations.centre }}
+						Aptitude médicale validée par l'AMCO en :
+						{{ baseAutorisations.amco|date('m/Y') }}
+						<br><br>
+						En foi de quoi j'autorise :
+						{{ baseAutorisations.genre}}
+						{{ baseAutorisations.nom}}
+						{{baseAutorisations.prenom}}
+						<br>
+						A effectuer des travaux en hauteur
+						<br>
+						<br>
+						Fait le :
+						{{ "now"|date('d/m/Y') }}
+						validité :
+						{{ baseAutorisations.validite|date('d/m/Y') }}
+						<br>
+					</div>
+					<div class="card-footer">
+						<div class="card-dg">
+							{{ entreprise.genreDirecteur }}
+							{{ entreprise.nomDirecteur }}
+							{{ entreprise.prenomDirecteur }}
+							<br>Directeur Général
+						</div>
+						<div>
+							<img class="card-signature" src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/>
+						</div>
+					</div>
+				</div>
+				<div>
+					<button onclick="window.print()">Imprimer</button>
+				</div>
+			{% endfor %}
+	{% elseif baseAutorisations.type == 'Habilitation électrique' %}
 	<pre>
 		{{ dump(baseAutorisations) }}
 	</pre>
