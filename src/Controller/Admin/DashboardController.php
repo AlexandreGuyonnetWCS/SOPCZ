@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Centre;
 use App\Entity\Employe;
+use App\Entity\Document;
 use App\Entity\Entreprise;
 use App\Entity\DiplomeFull;
 use App\Entity\BaseAutorisation;
@@ -68,6 +69,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Centres', 'fas fa-building', Centre::class);
         yield MenuItem::linkToCrud('Employés', 'fas fa-users', Employe::class);
+        yield MenuItem::linkToCrud('Documents', 'fas fa-file', Document::class);
         yield MenuItem::linkToCrud('Base Diplomes', 'fas fa-envelope', DiplomeFull::class);
         yield MenuItem::linkToCrud('Numero d\'habilitation', 'fas fa-tools', NumeroHabilitation::class);
         yield MenuItem::linkToCrud('Base de données', 'fas fa-database', BaseAutorisation::class);

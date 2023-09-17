@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Spatie\PdfToImage\Pdf;
 
 class PdfService
 {
@@ -17,7 +18,7 @@ class PdfService
         $pdfOptions->setDefaultPaperSize('A4');
         $pdfOptions->set('isHtml5ParserEnabled', true);
         $pdfOptions->setDpi(300);
-        
+
         $this->domPdf->setOptions($pdfOptions);
     }
 
@@ -36,4 +37,13 @@ class PdfService
             'Attachment' => true,
         ]);
     }
+
+    // convertir pdf en image avec Spatie
+
+    // public function convertPdfToImage(string $pdf): void
+    // {
+    //     $pdf = new Pdf($pdf);
+    //     $pdf->setResolution(100);
+    //     $pdf->setPage(1)->saveImage('public/uploads/employes/ . employe->getdocument() . .png');
+    // }
 }

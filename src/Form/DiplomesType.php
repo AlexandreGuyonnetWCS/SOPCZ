@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormInterface;
 
 class DiplomesType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $datas = $options['datas'];

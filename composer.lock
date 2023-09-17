@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c46f194d7a91c1f9ecc1d7f7ada3879",
+    "content-hash": "caf03a39a5994b8dc6ad528b1537aa88",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3045,6 +3045,60 @@
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
             },
             "time": "2021-12-11T13:40:54+00:00"
+        },
+        {
+            "name": "spatie/pdf-to-image",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/pdf-to-image.git",
+                "reference": "9a5cb264a99e87e010c65d4ece03b51f821d55bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/9a5cb264a99e87e010c65d4ece03b51f821d55bd",
+                "reference": "9a5cb264a99e87e010c65d4ece03b51f821d55bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\PdfToImage\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert a pdf to an image",
+            "homepage": "https://github.com/spatie/pdf-to-image",
+            "keywords": [
+                "convert",
+                "image",
+                "pdf",
+                "pdf-to-image",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/pdf-to-image/issues",
+                "source": "https://github.com/spatie/pdf-to-image/tree/master"
+            },
+            "time": "2016-12-14T15:37:00+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -7870,16 +7924,16 @@
         },
         {
             "name": "vich/uploader-bundle",
-            "version": "2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dustin10/VichUploaderBundle.git",
-                "reference": "6674793a33bb0ff6069b01b757735a42ac5e3830"
+                "reference": "3eff8b0b585bfc891fa1a8eb8aae2e77fe483ca2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/6674793a33bb0ff6069b01b757735a42ac5e3830",
-                "reference": "6674793a33bb0ff6069b01b757735a42ac5e3830",
+                "url": "https://api.github.com/repos/dustin10/VichUploaderBundle/zipball/3eff8b0b585bfc891fa1a8eb8aae2e77fe483ca2",
+                "reference": "3eff8b0b585bfc891fa1a8eb8aae2e77fe483ca2",
                 "shasum": ""
             },
             "require": {
@@ -7912,7 +7966,7 @@
                 "league/flysystem-memory": "^2.0",
                 "matthiasnoback/symfony-dependency-injection-test": "^4.3",
                 "mikey179/vfsstream": "^1.6.8",
-                "phpunit/phpunit": "^9.5",
+                "phpunit/phpunit": "^9.6",
                 "symfony/asset": "^5.4 || ^6.0",
                 "symfony/browser-kit": "^5.4 || ^6.0",
                 "symfony/css-selector": "^5.4 || ^6.0",
@@ -7920,14 +7974,15 @@
                 "symfony/dom-crawler": "^5.4 || ^6.0",
                 "symfony/form": "^5.4 || ^6.0",
                 "symfony/framework-bundle": "^5.4 || ^6.0",
-                "symfony/phpunit-bridge": "^6.2",
+                "symfony/phpunit-bridge": "^6.3",
                 "symfony/security-csrf": "^5.4 || ^6.0",
                 "symfony/translation": "^5.4 || ^6.0",
                 "symfony/twig-bridge": "^5.4 || ^6.0",
                 "symfony/twig-bundle": "^5.4 || ^6.0",
                 "symfony/validator": "^5.4 || ^6.0",
                 "symfony/var-dumper": "^5.4 || ^6.0",
-                "symfony/yaml": "^5.4 || ^6.0"
+                "symfony/yaml": "^5.4 || ^6.0",
+                "yoast/phpunit-polyfills": "dev-main#3933ed2a2a7b7a158b48576abeef4a82f737fea1"
             },
             "suggest": {
                 "doctrine/annotations": "If you use doctrine/doctrine-bundle >2.7, this package is required to use annotations",
@@ -7972,9 +8027,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dustin10/VichUploaderBundle/issues",
-                "source": "https://github.com/dustin10/VichUploaderBundle/tree/2.1.1"
+                "source": "https://github.com/dustin10/VichUploaderBundle/tree/2.2.0"
             },
-            "time": "2023-03-07T07:01:20+00:00"
+            "time": "2023-08-10T12:55:46+00:00"
         }
     ],
     "packages-dev": [
