@@ -150,7 +150,7 @@ class UserCrudController extends AbstractCrudController
             'fas fa-envelope'
         )
             ->linkToCrudAction('sendMailResetPassword')
-            ->displayIf(fn (User $user) => !$user->getIsVerified() === true)
+            ->displayIf(fn (User $user) => $user->getIsVerified() === true)
             ->addCssClass('btn btn-primary');
         return $actions
             ->add(Crud::PAGE_EDIT, $sendEmail)
