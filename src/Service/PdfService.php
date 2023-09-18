@@ -18,6 +18,7 @@ class PdfService
         $pdfOptions->setDefaultPaperSize('A4');
         $pdfOptions->set('isHtml5ParserEnabled', true);
         $pdfOptions->setDpi(300);
+        $pdfOptions->set('isRemoteEnabled', true);
 
         $this->domPdf->setOptions($pdfOptions);
     }
