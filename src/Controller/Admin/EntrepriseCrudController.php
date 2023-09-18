@@ -53,14 +53,14 @@ class EntrepriseCrudController extends AbstractCrudController
         ];
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return parent::configureActions($actions)
-        ->setPermission(Action::INDEX, 'ROLE_ADMIN')
-        ->setPermission(Action::NEW, 'ROLE_ADMIN')
-        ->setPermission(Action::EDIT, 'ROLE_ADMIN')
-        ->setPermission(Action::DELETE, 'ROLE_ADMIN');
-    }
+    // public function configureActions(Actions $actions): Actions
+    // {
+    //     return parent::configureActions($actions)
+    //     ->setPermission(Action::INDEX, 'ROLE_ADMIN')
+    //     ->setPermission(Action::NEW, 'ROLE_ADMIN')
+    //     ->setPermission(Action::EDIT, 'ROLE_ADMIN')
+    //     ->setPermission(Action::DELETE, 'ROLE_ADMIN');
+    // }
 
     /*
     public function configureFields(string $pageName): iterable
