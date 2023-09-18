@@ -83,12 +83,12 @@ class DashboardController extends AbstractDashboardController
             ->addWebpackEncoreEntry('admin');
     }
 
-    public function configureActions(): Actions
-    {
-        return parent::configureActions()
-            ->setPermission(Action::INDEX, 'ROLE_ADMIN')
-            ->setPermission(Action::NEW, 'ROLE_ADMIN')
-            ->setPermission(Action::EDIT, 'ROLE_ADMIN')
-            ->setPermission(Action::DELETE, 'ROLE_ADMIN');
-    }
+    // public function configureActions(): Actions
+    // {
+    //     return parent::configureActions()
+    //         ->setPermission(Action::INDEX, 'ROLE_ADMIN')
+    //         ->setPermission(Action::NEW, 'ROLE_ADMIN')
+    //         ->setPermission(Action::EDIT, 'ROLE_ADMIN')
+    //         ->setPermission(Action::DELETE, 'ROLE_ADMIN');
+    // }
 }
