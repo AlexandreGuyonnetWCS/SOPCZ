@@ -230,9 +230,9 @@ class UserCrudController extends AbstractCrudController
     private function sendEmailVerification(User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from('admin@example.com')
+            ->from('ludovic.guyonnet@sopcz.org')
             ->to($user->getEmail())
-            ->subject('Verify your email address')
+            ->subject('Mail de vérification')
             ->htmlTemplate('emails/user_verification.html.twig')
             ->context([
                 'user' => $user,
@@ -244,9 +244,9 @@ class UserCrudController extends AbstractCrudController
     private function sendEmailResetPassword(User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from('admin@example.com')
+            ->from('ludovic.guyonnet@sopcz.org')
             ->to($user->getEmail())
-            ->subject('Reset your password')
+            ->subject('Mail de réinitialisation de mot de passe')
             ->htmlTemplate('emails/user_reset_password.html.twig')
             ->context([
                 'user' => $user,
