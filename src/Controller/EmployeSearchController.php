@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
-use App\Service\PdfService;
+use Knp\Snappy\Pdf;
 use App\Form\EmployeSearchFormType;
+use App\Repository\EmployeRepository;
 use App\Repository\EntrepriseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\BaseAutorisationRepository;
-use App\Repository\EmployeRepository;
-use App\Repository\NumeroHabilitationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\NumeroHabilitationRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmployeSearchController extends AbstractController
@@ -24,12 +25,13 @@ class EmployeSearchController extends AbstractController
         BaseAutorisationRepository $baseRepository,
         EntrepriseRepository $entrepriseRepository,
         NumeroHabilitationRepository $numeroHabilitationRepository,
-        EmployeRepository $employeRepository
+        EmployeRepository $employeRepository,
     ) {
         $this->baseRepository = $baseRepository;
         $this->entrepriseRepository = $entrepriseRepository;
         $this->numeroHabilitationRepository = $numeroHabilitationRepository;
         $this->employeRepository = $employeRepository;
+        
     }
     #[Route('/carte', name: 'index')]
     public function search(Request $request): Response
@@ -59,8 +61,9 @@ class EmployeSearchController extends AbstractController
 
     #[Route('carte/pdf/', name: 'carte_pdf', methods: ['GET'])]
 
-    public function cardToPdf(PdfService $pdfService): Response
-    {
+    public function cardToPdf(Pdf $knpSnappyPdf): Response
+    {   
+        $id = uniqid();
         $nom = $_GET['nom'];
         $prenom = $_GET['prenom'];
         $type = $_GET['type'];
@@ -68,7 +71,6 @@ class EmployeSearchController extends AbstractController
         $datas = $this->baseRepository->getDiplomeByTypeName($type, $name, $nom, $prenom);
         $entreprise = $this->entrepriseRepository->findAll();
         $numero = $this->numeroHabilitationRepository->getNumberHabilitation($nom, $prenom);
-
 
         $html = $this->renderView('card_templates/carte.html.twig', [
             'type' => $type,
@@ -80,9 +82,10 @@ class EmployeSearchController extends AbstractController
             'numero' => $numero,
         ]);
 
-        $pdfService->generateBinaryPDF($html);
-
-        return new Response();
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            $id .'carte.pdf'
+        );
     }
 
     #[Route('carte/show', name: 'show', methods: ['GET'])]
