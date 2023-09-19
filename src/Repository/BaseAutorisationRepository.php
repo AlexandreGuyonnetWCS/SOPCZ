@@ -116,7 +116,7 @@ class BaseAutorisationRepository extends ServiceEntityRepository
         foreach ($query as $key => $value) {
             $categories[] = $value['diplomeCategory'];
         }
-        $categories_string = implode(' ', $categories);
+        $categoriesString = implode(' ', $categories);
 
         $genre = $query[0]['genre'];
         $photo = $query[0]['photo'];
@@ -135,7 +135,7 @@ class BaseAutorisationRepository extends ServiceEntityRepository
         }
         $creation = $query[0]['createdAt'];
 
-        $older_validite = $this->createQueryBuilder('b')
+        $olderValidite = $this->createQueryBuilder('b')
             ->select('MIN(b.endedAt)')
             ->join('b.employe', 'e')
             ->join('b.diplome', 'd')
@@ -155,16 +155,16 @@ class BaseAutorisationRepository extends ServiceEntityRepository
             ->select('c.nom')
             ->join('b.centre', 'c')
             ->where('b.endedAt = :older_validite')
-            ->setParameter('older_validite', $older_validite)
+            ->setParameter('older_validite', $olderValidite)
             ->distinct()
             ->getQuery()
             ->getSingleScalarResult();
 
         $results = [
-            'categories' => $categories_string,
+            'categories' => $categoriesString,
             'type' => $type,
             'name' => $name,
-            'validite' => $older_validite,
+            'validite' => $olderValidite,
             'centre' => $centre,
             'nom' => $nom,
             'prenom' => $prenom,

@@ -317,10 +317,10 @@
 			{% for entreprise in entreprise %}
 				<div class="card-container">
 					<div class="card-header">
-						<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
+						<img class="logo" src="{{  absolute_url ( asset ('uploads/logos/' ~ entreprise.logo ))}}"/>
 					</div>
 					<div class="card-photo">
-						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
+						<img class="photo" src="{{ absolute_url (asset ('uploads/employes/' ~ baseAutorisations.photo)) }}"/>
 					</div>
 					<div class="card-body">
 					
@@ -333,7 +333,7 @@
 					</div>
 					<div class="card-footer">
 						<div>
-							<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ baseAutorisations.image ) }} " alt=""/>
+							<img class="card-diplome-logo" src=" {{ absolute_url ( asset ('uploads/images/' ~ baseAutorisations.image )) }} " alt=""/>
 						</div>
 						<div class="card-diplome-type">
 							{{ baseAutorisations.type }}
@@ -394,23 +394,21 @@
 							<br>Directeur Général
 						</div>
 						<div>
-							<img class="card-signature" src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/>
+							<img class="card-signature" src=" {{ absolute_url (asset ( 'uploads/signatures/' ~ entreprise.signatureDirecteur ))}}" alt=""/>
 						</div>
 					</div>
 				</div>
-				<div>
-					<button onclick="window.print()">Imprimer</button>
-				</div>
+			
 			{% endfor %}
 		</body>
 	{% elseif baseAutorisations.type == 'Travaux en hauteur' and baseAutorisations.name == 'Echafaudage' %}
 	{% for entreprise in entreprise %}
 				<div class="card-container">
 					<div class="card-header">
-						<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
+						<img class="logo" src="{{ absolute_url ( asset( 'uploads/logos/' ~ entreprise.logo)) }}"/>
 					</div>
 					<div class="card-photo">
-						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
+						<img class="photo" src="{{ absolute_url ( asset('uploads/employes/' ~ baseAutorisations.photo)) }}"/>
 					</div>
 					<div class="card-body">
 					
@@ -423,7 +421,7 @@
 					</div>
 					<div class="card-footer">
 						<div>
-							<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ baseAutorisations.image ) }} " alt=""/>
+							<img class="card-diplome-logo" src=" {{ absolute_url ( asset ('uploads/images/' ~ baseAutorisations.image )) }} " alt=""/>
 						</div>
 						<div class="card-diplome-type">
 						</div>
@@ -479,22 +477,19 @@
 							<br>Directeur Général
 						</div>
 						<div>
-							<img class="card-signature" src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/>
+							<img class="card-signature" src=" {{ absolute_url ( asset ( 'uploads/signatures/' ~ entreprise.signatureDirecteur ))}}" alt=""/>
 						</div>
 					</div>
-				</div>
-				<div>
-					<button onclick="window.print()">Imprimer</button>
 				</div>
 			{% endfor %}
 	{% elseif baseAutorisations.type == 'Travaux en hauteur' %}
 	{% for entreprise in entreprise %}
 				<div class="card-container">
 					<div class="card-header">
-						<img class="logo" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/>
+						<img class="logo" src="{{ absolute_url ( asset ( 'uploads/logos/' ~ entreprise.logo)) }}"/>
 					</div>
 					<div class="card-photo">
-						<img class="photo" src="{{ asset('uploads/employes/' ~ baseAutorisations.photo) }}"/>
+						<img class="photo" src="{{ absolute_url (asset ('uploads/employes/' ~ baseAutorisations.photo)) }}"/>
 					</div>
 					<div class="card-body">
 					
@@ -507,7 +502,7 @@
 					</div>
 					<div class="card-footer">
 						<div>
-							<img class="card-diplome-logo" src=" {{ asset ('uploads/images/' ~ baseAutorisations.image ) }} " alt=""/>
+							<img class="card-diplome-logo" src=" {{ absolute_url ( asset ('uploads/images/' ~ baseAutorisations.image )) }} " alt=""/>
 						</div>
 						<div class="card-diplome-type">
 						</div>
@@ -563,12 +558,9 @@
 							<br>Directeur Général
 						</div>
 						<div>
-							<img class="card-signature" src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/>
+							<img class="card-signature" src=" {{ absolute_url ( asset ( 'uploads/signatures/' ~ entreprise.signatureDirecteur ))}}" alt=""/>
 						</div>
 					</div>
-				</div>
-				<div>
-					<button onclick="window.print()">Imprimer</button>
 				</div>
 			{% endfor %}
 	{% elseif baseAutorisations.type == 'Habilitation électrique' %}
@@ -580,7 +572,7 @@
 				<table class="tg-1">
 					<thead>
 						<tr>
-							<th class="tg-5men"><img class="logo-2" src="{{ asset( 'uploads/logos/' ~ entreprise.logo) }}"/></th>
+							<th class="tg-5men"><img class="logo-2" src="{{ absolute_url ( asset( 'uploads/logos/' ~ entreprise.logo)) }}"/></th>
 							<th class="tg-6men" colspan="3"><strong>TITRE D'HABILITATION ELECTRIQUE</strong></th>
 						</tr>
 					</thead>
@@ -696,7 +688,7 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Charge&nbspd'opérations&nbspspécifiques</td>
+							<td class="tg-exhm">Chargé&nbspd'opérations&nbspspécifiques</td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
@@ -730,7 +722,7 @@
 								{{ entreprise.genreDirecteur }}
 								{{ entreprise.nomDirecteur }}
 								{{ entreprise.prenomDirecteur }}.
-								<br>Fonction : Directeur Général<img src=" {{ asset( 'uploads/signatures/' ~ entreprise.signatureDirecteur )}}" alt=""/></td>
+								<br>Fonction : Directeur Général<img src=" {{ absolute_url (asset ( 'uploads/signatures/' ~ entreprise.signatureDirecteur ))}}" alt=""/></td>
 							<td class="tg-7fzc">Date de délivrance :
 								{{ baseAutorisations.creation|date('d/m/Y') }}<br>
 								Date d'expiration :

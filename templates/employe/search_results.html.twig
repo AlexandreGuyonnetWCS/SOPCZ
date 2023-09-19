@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<h1 class="text-center text-white mt-2 mb-4">Résultats de la recherche</h1>
+	<h2 class="text-center text-white mt-2 mb-4">Résultats de la recherche</h2>
 	<div class="container">
 		<div class="row g-0 mb-3">
 			<div class="col-md-10 col-12 ">
@@ -74,7 +74,23 @@
 					</div>
 				</div>
 				{{ render(controller('App\\Controller\\BaseController::search')) }}
-
+			</div>
+			<div class="container mt-3 mb-5">
+			<div class="row">
+			<h2 class="text-center text-white mb-3">Liste des documents :</h2>
+			{% if employe.documents %}
+			{% for document in employe.documents %}
+			<div class="col-auto align-self-center">
+			<a class="text-white" href="{{ asset('uploads/employes/' ~ document.name) }}" target="_blank"><img class="m-2" src="..\uploads\logos\PDF_logo.png" alt="{{ document.name }}"></a>
+				<p class="text-white text-center mt-2">{{ document.name }}</p>
+			</div>
+			{% else %}
+			<div class="text-center">
+				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'a aucun document</p>
+			</div>
+			{% endfor %}
+			{% endif %}
+			</div>
 			</div>
 		{% else %}
 		{% if employe|length %}		
@@ -113,15 +129,34 @@
 				<a class="btn btn-primary m-3" href="{{ path('index') }}">Retour à la recherche</a>
 			</div>
 			</div>
+			<h2 class="text-center text-white mb-3">Liste des autorisations :</h2>
 			<div class="text-center">
-				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'a aucune autorisation</p>
+				<p class="text-white text-center mt-5 mb-5">Nous sommes désolés mais ce collaborateur n'a aucune autorisation</p>
 			</div>
-			
+			<div class="container">
+			<div class="row">
+			<h2 class="text-center text-white mb-3">Liste des documents :</h2>
+			{% if employe.documents %}
+			{% for document in employe.documents %}
+			<div class="col-auto align-self-center">
+			<a class="text-white" href="{{ asset('uploads/employes/' ~ document.name) }}" target="_blank"><img class="m-2" src="..\uploads\logos\PDF_logo.png" alt="{{ document.name }}"></a>
+				<p class="text-white text-center mt-2">{{ document.name }}</p>
+			</div>
+			{% else %}
+			<div class="text-center">
+				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'a aucun document</p>
+			</div>
+			{% endfor %}
+			{% endif %}
+			</div>
+			</div>
+			</div>
 		{% else %}
 			<div class="text-center">
 				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'existe pas</p>
-				<a class="btn btn-primary mt-5" href="{{ path('index') }}">Retour à la recherche</a>
+				<a class="btn btn-primary m2" href="{{ path('index') }}">Retour à la recherche</a>
 			</div>
+			
 		{% endif %}
 	{% endif %}
 	</div>

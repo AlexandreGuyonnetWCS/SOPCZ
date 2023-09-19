@@ -142,7 +142,7 @@ class UserCrudController extends AbstractCrudController
     {
         $sendEmail = Action::new('sendEmail', 'Envoyer un email de vérification', 'fas fa-envelope')
             ->linkToCrudAction('sendEmail')
-            ->displayIf(fn (User $user) => $user->getIsVerified())
+            ->displayIf(fn (User $user) => $user->getIsVerified() === false)
             ->addCssClass('btn btn-primary');
         $sendResetPassword = Action::new(
             'sendMailResetPassword',
@@ -150,7 +150,7 @@ class UserCrudController extends AbstractCrudController
             'fas fa-envelope'
         )
             ->linkToCrudAction('sendMailResetPassword')
-            ->displayIf(fn (User $user) => !$user->getIsVerified())
+            ->displayIf(fn (User $user) => $user->getIsVerified() === true)
             ->addCssClass('btn btn-primary');
         return $actions
             ->add(Crud::PAGE_EDIT, $sendEmail)
@@ -230,9 +230,9 @@ class UserCrudController extends AbstractCrudController
     private function sendEmailVerification(User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from('admin@example.com')
+            ->from('ludovic.guyonnet@sopcz.org')
             ->to($user->getEmail())
-            ->subject('Verify your email address')
+            ->subject('Mail de vérification')
             ->htmlTemplate('emails/user_verification.html.twig')
             ->context([
                 'user' => $user,
@@ -244,9 +244,9 @@ class UserCrudController extends AbstractCrudController
     private function sendEmailResetPassword(User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from('admin@example.com')
+            ->from('ludovic.guyonnet@sopcz.org')
             ->to($user->getEmail())
-            ->subject('Reset your password')
+            ->subject('Mail de réinitialisation de mot de passe')
             ->htmlTemplate('emails/user_reset_password.html.twig')
             ->context([
                 'user' => $user,
