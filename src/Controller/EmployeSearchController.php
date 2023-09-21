@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Knp\Snappy\Pdf;
 use App\Form\EmployeSearchFormType;
 use App\Repository\EmployeRepository;
@@ -20,6 +22,7 @@ class EmployeSearchController extends AbstractController
     private EntrepriseRepository $entrepriseRepository;
     private NumeroHabilitationRepository $numeroHabilitationRepository;
     private EmployeRepository $employeRepository;
+    private Dompdf $dompdf;
 
     public function __construct(
         BaseAutorisationRepository $baseRepository,
@@ -31,8 +34,8 @@ class EmployeSearchController extends AbstractController
         $this->entrepriseRepository = $entrepriseRepository;
         $this->numeroHabilitationRepository = $numeroHabilitationRepository;
         $this->employeRepository = $employeRepository;
-        
     }
+
     #[Route('/carte', name: 'index')]
     public function search(Request $request): Response
     {
@@ -61,8 +64,8 @@ class EmployeSearchController extends AbstractController
 
     #[Route('carte/pdf/', name: 'carte_pdf', methods: ['GET'])]
 
-    public function cardToPdf(Pdf $knpSnappyPdf): Response
-    {   
+    public function cardToPdf(): void
+    {
         $id = uniqid();
         $nom = $_GET['nom'];
         $prenom = $_GET['prenom'];
@@ -72,7 +75,7 @@ class EmployeSearchController extends AbstractController
         $entreprise = $this->entrepriseRepository->findAll();
         $numero = $this->numeroHabilitationRepository->getNumberHabilitation($nom, $prenom);
 
-        $html = $this->renderView('card_templates/carte.html.twig', [
+        $html = $this->renderView('card_templates/cartepdf.html.twig', [
             'type' => $type,
             'name' => $name,
             'nom' => $nom,
@@ -80,12 +83,20 @@ class EmployeSearchController extends AbstractController
             'entreprise' => $entreprise,
             'baseAutorisations' => $datas,
             'numero' => $numero,
-        ]);
 
-        return new PdfResponse(
-            $knpSnappyPdf->getOutputFromHtml($html),
-            $id .'carte.pdf'
-        );
+        ]);
+        $path = $this->getParameter('kernel.project_dir') . '/public/uploads/';
+        $data = realpath($path);
+        $pdfOptions = new Options();
+        $pdfOptions->setIsRemoteEnabled(true);
+        $pdfOptions->setChroot($data);
+
+        $this->dompdf = new Dompdf($pdfOptions);
+        $this->dompdf->loadHtml($html);
+        $this->dompdf->render();
+        $this->dompdf->stream($id . "-carte.pdf", [
+            "Attachment" => true
+        ]);
     }
 
     #[Route('carte/show', name: 'show', methods: ['GET'])]
