@@ -15,9 +15,10 @@
 knp_snappy:
     pdf:
         enabled:    true
-        binary:     wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
+        binary:     "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
         options:    []
+        
     image:
         enabled:    true
-        binary:     wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
+        binary:     #
         options:    []
