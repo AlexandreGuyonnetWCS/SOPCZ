@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-	<h2 class="text-center text-white mt-2 mb-4">Résultats de la recherche</h2>
 	<div class="container">
 		<div class="row g-0 mb-3">
-			<div class="col-md-10 col-12 ">
+			<div class="col-12 ">	
+	<h2 class="text-center text-white">Résultats de la recherche</h2>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row g-0 mb-3">
+			<div class="col-md-10 col-12 ">		
 				{% if datas|length %}
 					{% for i in datas |slice(start=0, length=1) %}
 						<div class="card mb-2">
@@ -124,7 +129,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="col-md-2 col-12 my-auto">
 				<a class="btn btn-primary m-3" href="{{ path('index') }}">Retour à la recherche</a>
 			</div>
@@ -155,8 +159,7 @@
 			<div class="text-center">
 				<p class="text-white text-center mt-5">Nous sommes désolés mais ce collaborateur n'existe pas</p>
 				<a class="btn btn-primary m2" href="{{ path('index') }}">Retour à la recherche</a>
-			</div>
-			
+			</div>	
 		{% endif %}
 	{% endif %}
 	</div>
