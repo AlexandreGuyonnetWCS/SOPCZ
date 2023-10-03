@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Knp\Snappy\Pdf;
+use App\Repository\UserRepository;
 use App\Form\EmployeSearchFormType;
 use App\Repository\EmployeRepository;
 use App\Repository\EntrepriseRepository;
@@ -13,7 +13,6 @@ use App\Repository\BaseAutorisationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\NumeroHabilitationRepository;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmployeSearchController extends AbstractController
@@ -23,17 +22,20 @@ class EmployeSearchController extends AbstractController
     private NumeroHabilitationRepository $numeroHabilitationRepository;
     private EmployeRepository $employeRepository;
     private Dompdf $dompdf;
+    private UserRepository $userRepository;
 
     public function __construct(
         BaseAutorisationRepository $baseRepository,
         EntrepriseRepository $entrepriseRepository,
         NumeroHabilitationRepository $numeroHabilitationRepository,
         EmployeRepository $employeRepository,
+        UserRepository $userRepository
     ) {
         $this->baseRepository = $baseRepository;
         $this->entrepriseRepository = $entrepriseRepository;
         $this->numeroHabilitationRepository = $numeroHabilitationRepository;
         $this->employeRepository = $employeRepository;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('/carte', name: 'index')]
@@ -49,13 +51,24 @@ class EmployeSearchController extends AbstractController
             $datas = $this->baseRepository->getEmployeBaseInfo($employeNom, $employePrenom);
             $numero = $this->numeroHabilitationRepository->getNumberHabilitation($employeNom, $employePrenom);
             $employe = $this->employeRepository->findOneBy(['nom' => $employeNom, 'prenom' => $employePrenom]);
-
-            return $this->render('employe/search_results.html.twig', [
-                'datas' => $datas,
-                'numero' => $numero,
-                'form' => $form->createView(),
-                'employe' => $employe,
-            ]);
+            try {
+                $departement = $employe->getDepartement();
+            } catch (\Throwable $th) {
+                return $this->render('employe/no_search_results.html.twig');
+            }
+            $departement = $employe->getDepartement();
+            $user = $this->getUser();
+            $userDepartement = array($this->userRepository->findDepartement($user));
+        if (in_array($departement, $userDepartement[0]) ) {
+                return $this->render('employe/search_results.html.twig', [
+                    'datas' => $datas,
+                    'numero' => $numero,
+                    'form' => $form->createView(),
+                    'employe' => $employe,
+                ]);
+            } else {
+            return $this->render('employe/search_results_no_departement.html.twig'); 
+        }
         }
         return $this->render('card_generator/index.html.twig', [
             'form' => $form->createView(),

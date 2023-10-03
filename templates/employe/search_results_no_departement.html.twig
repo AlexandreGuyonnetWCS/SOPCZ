@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="container">
+		<div class="row g-0 mb-3">
+			<div class="col-12 ">
+				<h2 class="text-center text-white">Résultats de la recherche</h2>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row g-0">
+            <div class="col-12 my-auto">
+                <div class="text-center text-white mt-5">Vous n'avez pas accès aux collaborateurs de ce département, merci d'en faire la demande à votre gestionnaire</div>
+			<div class="col-12 my-auto text-center mt-5">
+				<a class="btn btn-primary m-3" href="{{ path('index') }}">Retour à la recherche</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

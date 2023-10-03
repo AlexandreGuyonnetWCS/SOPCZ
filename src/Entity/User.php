@@ -54,6 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $emailToken;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?array $Departement = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -181,5 +184,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emailToken = $emailToken;
 
         return $this;
+    }
+
+    public function getDepartement(): ?array
+    {
+        return $this->Departement;
+    }
+
+    public function setDepartement(?array $Departement): static
+    {
+        $this->Departement = $Departement;
+
+        return $this;
+    }
+
+    public function arrayToString(): string
+    {
+        return implode(",", $this->Departement);
     }
 }

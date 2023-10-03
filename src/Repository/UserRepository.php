@@ -56,6 +56,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    public function findDepartement(User $user): ?array
+    {
+        $departement = $user->getDepartement();
+
+        return $departement;
+    }
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

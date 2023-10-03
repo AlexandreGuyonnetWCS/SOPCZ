@@ -92,9 +92,9 @@
 				font-weight: bold;
 				background-color: #f4e3d7;
 				color: black;
-				height: 8rem;
+				height: 132px;
 				border-radius: 10px 10px 0 0;
-				padding: 0.5rem;
+				padding: 10px;
 
 			}
 			.card-nom {
@@ -564,9 +564,6 @@
 				</div>
 			{% endfor %}
 	{% elseif baseAutorisations.type == 'Habilitation électrique' %}
-	<pre>
-		{{ dump(baseAutorisations) }}
-	</pre>
 		<div class="container-2">
 			{% for entreprise in entreprise %}
 				<table class="tg-1">
@@ -580,7 +577,7 @@
 						<tr>
 							<td class="tg-5men" colspan="4">Le titre d’habilitation formalise la reconnaissance, par l’employeur, de la capacité d’un salarié à travailler en sécurité sur des ouvrages électriques.<br>
 								Il est établi en tenant compte des éléments suivants :
-								<br>
+								
 							</td>
 						</tr>
 						<tr>
