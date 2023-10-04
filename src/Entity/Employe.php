@@ -36,12 +36,12 @@ class Employe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'employe')]
+    #[ORM\ManyToMany(targetEntity: BaseAutorisation::class, mappedBy: 'employe', cascade: ['remove'])]
     private Collection $baseAutorisations;
 
-    #[ORM\OneToOne(mappedBy: 'employe', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'employe' , cascade: ['remove'])]
     private ?NumeroHabilitation $numeroHabilitation = null;
-    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: Document::class)]
+    #[ORM\OneToMany(mappedBy: 'employe', targetEntity: Document::class, cascade: ['persist', 'remove'])]
     private Collection $documents;
 
     public function __construct()
