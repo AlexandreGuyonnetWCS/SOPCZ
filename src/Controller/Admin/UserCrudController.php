@@ -99,12 +99,11 @@ class UserCrudController extends AbstractCrudController
                 ),
                 ChoiceField::new('departement')
                 ->setChoices([
-                    '01' => '1',
                     '02' => '2',
                     '03' => '3',
                     '04' => '4',
-                    '05' => '5',
                     '06' => '6',
+                    '10' => '10',
                 ])
                 ->renderExpanded(true)
                 ->allowMultipleChoices(true),

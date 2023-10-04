@@ -18,7 +18,7 @@ class NumeroHabilitation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $number = null;
 
-    #[ORM\OneToOne(inversedBy: 'numeroHabilitation', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'numeroHabilitation')]
     private ?Employe $employe = null;
 
     #[ORM\ManyToMany(targetEntity: Centre::class, inversedBy: 'numeroHabilitations')]

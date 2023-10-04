@@ -590,7 +590,9 @@
 						</tr>
 						<tr>
 							<td class="tg-5men" colspan="2"><strong>Avis d'habilitation n° :</strong>
-								{{ numero[0].number }}
+							{% if numero|length %}
+							{{ numero[0].number }}
+							{% endif %}
 							</td>
 							<td class="tg-5men" colspan="2"><strong>Nom, Prénom:</strong>
 								{{ baseAutorisations.genre }}
@@ -599,7 +601,9 @@
 						</tr>
 						<tr>
 							<td class="tg-5men" colspan="2"><strong>Délivré par :</strong>
-								{{ numero[0].centre }}</td>
+							{% if numero|length %}
+								{{ numero[0].centre }}
+								{% endif %}</td>
 							<td class="tg-5men" colspan="2"><strong>qui occupe le poste de :</strong>
 								{{ baseAutorisations.poste }}</td>
 						</tr>
@@ -617,6 +621,7 @@
 				</table>
 				<br>
 				<br>
+				
 				<table class="tg">
 					<thead>
 						<tr>
@@ -637,9 +642,134 @@
 								<span style="color:#FFF">TRAVAUX D'ORDRE NON ELECTRIQUE</span>
 							</td>
 						</tr>
+						{% if baseAutorisations.categories == "TBT-BT" %}
 						<tr>
 							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm">B0-H0V</td>
+							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
 							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de chantier</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-6ia5" colspan="5">
+								<span style="color:#FFF">TRAVAUX D'ORDRE ELECTRIQUE</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm">B1V</td>
+							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de travaux</td>
+							<td class="tg-exhm">B2V</td>
+							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé&nbspd'intervention&nbspBT</td>
+							<td class="tg-exhm">BR</td>
+							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de consignation</td>
+							<td class="tg-exhm">BC</td>
+							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé&nbspd'opérations&nbspspécifiques</td>
+							<td class="tg-exhm">BE</td>
+							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Habilité spécial</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+						</tr>
+						{% elseif baseAutorisations.categories == "TBT-BT-HT" %}
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de chantier</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-6ia5" colspan="5">
+								<span style="color:#FFF">TRAVAUX D'ORDRE ELECTRIQUE</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm">B1V H1V</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de travaux</td>
+							<td class="tg-exhm">B2V H2V</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé&nbspd'intervention&nbspBT</td>
+							<td class="tg-exhm">BR TBT-BT</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de consignation</td>
+							<td class="tg-exhm">BC HC</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé&nbspd'opérations&nbspspécifiques</td>
+							<td class="tg-exhm">BE HE</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Habilité spécial</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+						</tr>
+						{% else %}
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm">B0-H0V</td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
 							<td class="tg-exhm"></td>
@@ -698,11 +828,12 @@
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm"></td>
 						</tr>
+						{% endif %}
 						<tr>
 							<td class="tg-7fzc" colspan="5">Document supplémentaire ?
-								<input type="checkbox" id="oui" name="oui" checked>
+								<input type="checkbox" id="oui" name="oui" >
 								<label for="oui">OUI</label>
-								<input type="checkbox" id="non" name="non">
+								<input type="checkbox" id="non" name="non" checked>
 								<label for="non">NON</label>
 							</td>
 						</tr>
