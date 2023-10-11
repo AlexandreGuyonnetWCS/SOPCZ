@@ -437,8 +437,6 @@
 						{{ baseAutorisations.categories }}
 						<br>
 						<br>
-						Fait le :
-						{{ "now"|date('d/m/Y') }}
 						validité :
 						{{ baseAutorisations.validite|date('d/m/Y') }}
 						<br>
@@ -520,8 +518,6 @@
 						A effectuer le montage, le démontage et la vérification des échafaudages.
 						<br>
 						<br>
-						Fait le :
-						{{ "now"|date('d/m/Y') }}
 						validité :
 						{{ baseAutorisations.validite|date('d/m/Y') }}
 						<br>
@@ -601,8 +597,6 @@
 						A effectuer des travaux en hauteur
 						<br>
 						<br>
-						Fait le :
-						{{ "now"|date('d/m/Y') }}
 						validité :
 						{{ baseAutorisations.validite|date('d/m/Y') }}
 						<br>
@@ -743,7 +737,7 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Chargé&nbspd'intervention&nbspBT</td>
+							<td class="tg-exhm">Chargé d'intervention BT</td>
 							<td class="tg-exhm">BR</td>
 							<td class="tg-exhm">TBT-BT</td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
@@ -757,9 +751,9 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Chargé&nbspd'opérations&nbspspécifiques</td>
-							<td class="tg-exhm">BE</td>
-							<td class="tg-exhm">TBT-BT</td>
+							<td class="tg-exhm">Chargé d'opérations spspécifiques</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
 							<td class="tg-exhm"></td>
 						</tr>
@@ -770,7 +764,8 @@
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm"></td>
 						</tr>
-						{% elseif baseAutorisations.categories == "TBT-BT-HT" %}
+						{% endif %}
+						{% if baseAutorisations.categories == "TBT-BT-HT" %}
 						<tr>
 							<td class="tg-exhm">Exécutant</td>
 							<td class="tg-exhm">TBT-BT-HT</td>
@@ -805,7 +800,7 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Chargé&nbspd'intervention&nbspBT</td>
+							<td class="tg-exhm">Chargé d'intervention BT</td>
 							<td class="tg-exhm">BR TBT-BT</td>
 							<td class="tg-exhm">TBT-BT-HT</td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
@@ -819,9 +814,9 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Chargé&nbspd'opérations&nbspspécifiques</td>
-							<td class="tg-exhm">BE HE</td>
-							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">Chargé d'opérations spécifiques</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
 							<td class="tg-exhm"></td>
 						</tr>
@@ -832,11 +827,12 @@
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm"></td>
 						</tr>
-						{% else %}
+						{% endif %}
+						{% if baseAutorisations.categories == "B0 - BF - H0V - HF" %}
 						<tr>
 							<td class="tg-exhm">Exécutant</td>
-							<td class="tg-exhm">B0-H0V</td>
-							<td class="tg-exhm"></td>
+							<td class="tg-exhm">B0-BF-H0V-HF</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
 							<td class="tg-exhm"></td>
 						</tr>
@@ -867,7 +863,7 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Chargé&nbspd'intervention&nbspBT</td>
+							<td class="tg-exhm">Chargé d'intervention BT</td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
@@ -881,7 +877,70 @@
 							<td class="tg-exhm"></td>
 						</tr>
 						<tr>
-							<td class="tg-exhm">Chargé&nbspd'opérations&nbspspécifiques</td>
+							<td class="tg-exhm">Chargé d'opérations spécifiques</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Habilité spécial</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+						</tr>
+						{% endif %}
+						{% if baseAutorisations.categories == "B0-H0V" %}
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm">B0-H0V</td>
+							<td class="tg-exhm">TBT-BT-HT</td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de chantier</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-6ia5" colspan="5">
+								<span style="color:#FFF">TRAVAUX D'ORDRE ELECTRIQUE</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Exécutant</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de travaux</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé d'intervention BT</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé de consignation</td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm"></td>
+							<td class="tg-exhm">{{ entreprise.nom }}</td>
+							<td class="tg-exhm"></td>
+						</tr>
+						<tr>
+							<td class="tg-exhm">Chargé d'opérations spécifiques</td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm"></td>
 							<td class="tg-exhm">{{ entreprise.nom }}</td>
