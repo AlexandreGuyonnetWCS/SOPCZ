@@ -72,21 +72,7 @@ class UserCrudController extends AbstractCrudController
                         ])
                     ]
                 ),
-            TextField::new('prenom')
-                ->setFormTypeOption(
-                    'constraints',
-                    [
-                        new Length([
-                            'min' => 2,
-                            'minMessage' => 'Le prénom doit contenir au moins 2 caractères',
-                            'max' => 255,
-                        ]),
-                        new Regex([
-                            'pattern' => "/^[a-zA-Z]+$/",
-                            'message' => "Le prénom '{{ value }}' n'est pas valide."
-                        ])
-                    ]
-                ),
+            TextField::new('prenom'),
             EmailField::new('email')
                 ->setFormTypeOption(
                     'constraints',
