@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(min: 2, minMessage: "Le prénom doit contenir au moins 2 caractères")]
-    #[Assert\Regex(pattern: "/^[a-zA-Z]+$/", message: "Le prénom '{{ value }}' n'est pas valide.")]
+    #[Assert\Regex(pattern: "/^[A-Z][\p{L}-]*$/", message: "Le prénom '{{ value }}' n'est pas valide.")]
     private ?string $prenom = null;
 
     #[ORM\Column(type: 'boolean')]
