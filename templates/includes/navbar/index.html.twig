@@ -8,13 +8,15 @@
 		<ul class="navbar-nav">
 			{% if is_granted('ROLE_USER') %}
 				<li class="nav-item">
-					<a class="nav-link">Bienvenue</a>
+					<a class="nav-link" href="{{ path('index') }}">Créer une carte</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_logout') }}">Se deconnecter</a>
 				</li>
+			{% endif %}
+			{% if is_granted('ROLE_EMPLOYE') %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('index') }}">Créer une carte</a>
+					<a class="nav-link" href="{{ path('app_logout') }}">Se deconnecter</a>
 				</li>
 			{% endif %}
 			{% if is_granted('ROLE_ADMIN') %}
@@ -22,10 +24,10 @@
 					<a class="nav-link" href="{{ path('admin') }}">Administration</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_logout') }}">Se deconnecter</a>
+					<a class="nav-link" href="{{ path('index') }}">Créer une carte</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('index') }}">Créer une carte</a>
+					<a class="nav-link" href="{{ path('app_logout') }}">Se deconnecter</a>
 				</li>
 				{% endif %}
 			</ul>

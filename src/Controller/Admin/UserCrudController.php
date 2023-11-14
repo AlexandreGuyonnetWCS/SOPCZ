@@ -98,6 +98,7 @@ class UserCrudController extends AbstractCrudController
                 ->setChoices([
                     'ROLE_USER' => 'ROLE_USER',
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
+                    'ROLE_EMPLOYE' => 'ROLE_EMPLOYE',
                 ]),
             $password = TextField::new('password')
                 ->setFormType(RepeatedType::class)

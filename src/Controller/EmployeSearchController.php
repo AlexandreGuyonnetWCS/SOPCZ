@@ -40,7 +40,11 @@ class EmployeSearchController extends AbstractController
 
     #[Route('/carte', name: 'index')]
     public function search(Request $request): Response
-    {
+    {   
+        $_SESSION['user'] = $this->getUser();
+        $roles = $_SESSION['user']->getRoles()[0];
+
+        if ($roles !== 'ROLE_EMPLOYE') {
         $form = $this->createForm(EmployeSearchFormType::class);
         $form->handleRequest($request);
 
@@ -73,6 +77,24 @@ class EmployeSearchController extends AbstractController
         return $this->render('card_generator/index.html.twig', [
             'form' => $form->createView(),
         ]);
+    } else {
+        $_SESSION['user'] = $this->getUser();
+        $employeNom = $_SESSION['user']->getNom();
+        $employePrenom = $_SESSION['user']->getPrenom();
+        $datas = $this->baseRepository->getEmployeBaseInfo($employeNom, $employePrenom);
+        $numero = $this->numeroHabilitationRepository->getNumberHabilitation($employeNom, $employePrenom);
+        $employe = $this->employeRepository->findOneBy(['nom' => $employeNom, 'prenom' => $employePrenom]);
+        $departement = $employe->getDepartement();
+
+        
+    return $this->render('employe/employe_view.html.twig', [
+        'departement' => $departement,
+        'numero' => $numero,
+        'employe' => $employe,
+        'datas' => $datas,
+    ]);
+
+}
     }
 
     #[Route('carte/pdf/', name: 'carte_pdf', methods: ['GET'])]
